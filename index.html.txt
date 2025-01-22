@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historiskt Bilspel</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div id="question-container" class="hidden">
+            <h2 id="question-text">Här visas frågan</h2>
+            <div id="answers">
+                <button class="answer">Svar 1</button>
+                <button class="answer">Svar 2</button>
+                <button class="answer">Svar 3</button>
+            </div>
+        </div>
+
+        <div id="score-container">
+            <p id="score">Poäng: 0</p>
+            <p id="level">Nivå: 1</p>
+            <p id="laps">Varv: 0</p>
+        </div>
+    </div>
+</body>
+</html>
