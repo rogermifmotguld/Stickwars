@@ -1,14 +1,10 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Bilens position och hastighet
-let carX = 400; // Startposition X (mitt på banan)
-let carY = 300; // Startposition Y (mitt på banan)
+// Bilens startposition på den vita körbanan
+let carX = 400; // Körbanans centrum (X)
+let carY = 100; // Längst upp på banan (centrum - yttre radie)
 let carSpeed = 3; // Bilens hastighet
-let laps = 0;
-let level = 1;
-let score = 0;
-
 let keys = {};
 document.addEventListener("keydown", (e) => keys[e.key] = true);
 document.addEventListener("keyup", (e) => keys[e.key] = false);
@@ -71,10 +67,10 @@ function updateCar() {
     }
 }
 
-// Starta om bilen från början
+// Starta om bilen från början (på banan)
 function resetCar() {
-    carX = 400; // Startposition X
-    carY = 300; // Startposition Y
+    carX = 400; // Körbanans centrum (X)
+    carY = 100; // Längst upp på banan (centrum - yttre radie)
 }
 
 // Spelloopen
