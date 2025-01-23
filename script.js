@@ -4,8 +4,8 @@ const ctx = canvas.getContext("2d");
 // Inställningar för bilens position och dimensioner
 const carWidth = 20; // Bilens bredd
 const carHeight = 20; // Bilens höjd
-let carX = 400 - carWidth / 2; // Startposition X (mitten av banan, placerad på vit körbana)
-let carY = 100 - carHeight / 2; // Startposition Y (radie 200 från centrum)
+let carX = 400 - carWidth / 2; // Startposition X (mitten av banan, centrerad på startlinjen)
+let carY = 90; // Startposition Y (precis ovanför startlinjen)
 let carSpeed = 3; // Bilens hastighet
 let keys = {}; // För tangenttryckningar
 let isRestarting = false; // Indikator för om spelet är i omstartsfas
@@ -18,7 +18,7 @@ document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
 });
 
-// Rita den cirkulära banan och startpunkten
+// Rita den cirkulära banan och startlinjen
 function drawTrack() {
     // Rita svart bakgrund
     ctx.fillStyle = "#000";
@@ -36,9 +36,13 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startpunkt som en rektangel
-    ctx.fillStyle = "#0F0"; // Grön färg
-    ctx.fillRect(400 - carWidth / 2, 100 - carHeight / 2, carWidth, carHeight);
+    // Rita grön startlinje
+    ctx.beginPath();
+    ctx.strokeStyle = "#0F0"; // Grön färg
+    ctx.lineWidth = 5; // Tjocklek på linjen
+    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie
+    ctx.lineTo(400, 300); // Sluta vid inre cirkelns radie
+    ctx.stroke();
 }
 
 // Rita bilen
@@ -89,9 +93,9 @@ function resetCar() {
     isRestarting = true;
     alert("Du körde av banan! Startar om...");
 
-    // Placera bilen på den gröna startpunkten
+    // Placera bilen ovanför startlinjen
     carX = 400 - carWidth / 2;
-    carY = 100 - carHeight / 2;
+    carY = 90; // Precis ovanför startlinjen
 
     // Nollställ tangenttryckningar
     keys = {};
@@ -105,7 +109,7 @@ function resetCar() {
 // Spelloopen
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
-    drawTrack(); // Rita banan och startpunkten
+    drawTrack(); // Rita banan och startlinjen
     drawCar(); // Rita bilen
     updateCar(); // Uppdatera bilens position
     requestAnimationFrame(gameLoop); // Kör nästa iteration
