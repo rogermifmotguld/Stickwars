@@ -71,21 +71,33 @@ function isCarOnTrack(x, y) {
     return distance >= 100 && distance <= 200;
 }
 
+// Funktion för att registrera ett varv
+function registerLap() {
+    const currentLap = (Date.now() - lapStartTime) / 1000;
+
+    // Uppdatera total tid
+    totalLapTime += currentLap;
+
+    // Kontrollera om detta är bästa varvtiden
+    if (currentLap < bestLapTime) {
+        bestLapTime = currentLap;
+        bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
+    }
+
+    // Nollställ aktuell varvtid
+    lapStartTime = Date.now();
+    currentLapTime = 0;
+}
+
+// Kontrollera om bilen korsar startlinjen
 function checkIfCrossingStartLine() {
     if (carY <= 120 && carY >= 100 && carX >= 380 && carX <= 420) {
         if (hasLeftStartLine) {
-            totalLapTime += currentLapTime;
-
-            if (currentLapTime < bestLapTime) {
-                bestLapTime = currentLapTime;
-                bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
-            }
-
-            lapStartTime = Date.now();
+            registerLap(); // Registrera ett varv
         }
         hasLeftStartLine = true;
     } else if (carY > 120 || carY < 100) {
-        hasLeftStartLine = false;
+        hasLeftStartLine = false; // Indikator för att bilen lämnar startlinjen
     }
 }
 
