@@ -157,9 +157,18 @@ function showQuestion() {
 updateDisplay();
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
+    function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
+
+    // Test: Rita en blå rektangel
+    ctx.fillStyle = "blue";
+    ctx.fillRect(50, 50, 100, 100);
+
     drawTrack(); // Rita banan
     drawCar(); // Rita bilen
     updateCar(); // Uppdatera bilens position
     requestAnimationFrame(gameLoop); // Fortsätt spel-loopen
 }
+
+
 gameLoop(); // Starta spel-loopen
