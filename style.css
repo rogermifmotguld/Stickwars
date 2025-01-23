@@ -38,9 +38,9 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
-    display: flex;
-    flex-wrap: wrap; /* Gör så att listan går på flera rader */
-    gap: 10px; /* Mellanrum mellan varv */
+    display: flex; /* Gör så att varvtiderna placeras i en vågrät rad */
+    flex-wrap: wrap; /* Radbrytning vid behov */
+    gap: 10px; /* Mellanrum mellan varvtider */
 }
 
 #lap-list li {
@@ -49,6 +49,7 @@ body {
     border-radius: 3px; /* Rundade hörn */
     font-size: 14px;
     color: #000; /* Svart text */
+    white-space: nowrap; /* Förhindra att tiderna bryts mitt i texten */
 }
 
 #gameCanvas {
