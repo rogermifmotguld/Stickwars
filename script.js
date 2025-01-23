@@ -7,11 +7,16 @@ let carY = 100; // Startposition Y (radie 200 från centrum)
 const carWidth = 20; // Bilens bredd
 const carHeight = 20; // Bilens höjd
 let carSpeed = 3; // Bilens hastighet
-let keys = {};
+let keys = {}; // För tangenttryckningar
+let isRestarting = false; // Indikator för om spelet är i omstartsfas
 
 // Registrera tangenttryckningar
-document.addEventListener("keydown", (e) => keys[e.key] = true);
-document.addEventListener("keyup", (e) => keys[e.key] = false);
+document.addEventListener("keydown", (e) => {
+    if (!isRestarting) keys[e.key] = true;
+});
+document.addEventListener("keyup", (e) => {
+    keys[e.key] = false;
+});
 
 // Funktion som ritar den cirkulära banan
 function drawTrack() {
@@ -51,6 +56,8 @@ function isCarOnTrack(x, y) {
 
 // Uppdatera bilens position och kontrollera kollisioner
 function updateCar() {
+    if (isRestarting) return; // Om spelet håller på att starta om, pausa uppdateringen
+
     let newCarX = carX;
     let newCarY = carY;
 
@@ -72,9 +79,14 @@ function updateCar() {
 
 // Starta om bilen från början (på den vita körbanan)
 function resetCar() {
+    isRestarting = true; // Sätt spelet i omstartsfas
     alert("Du körde av banan! Startar om...");
     carX = 400; // Startposition X (mitt på banan)
     carY = 100; // Startposition Y (radie = centrum - 200)
+    keys = {}; // Rensa alla tangenttryckningar
+    setTimeout(() => {
+        isRestarting = false; // Avsluta omstartsfasen efter en kort paus
+    }, 500); // Pausa spelet i 500 ms innan spelaren kan röra bilen igen
 }
 
 // Spelloopen
