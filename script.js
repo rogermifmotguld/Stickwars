@@ -154,12 +154,12 @@ function showQuestion() {
     document.getElementById("question-container").classList.remove("hidden");
 }
 
-function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawCar();
-    updateCar();
-    requestAnimationFrame(gameLoop);
-}
-
 updateDisplay();
 gameLoop();
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
+    drawTrack(); // Rita banan
+    drawCar(); // Rita bilen
+    updateCar(); // Uppdatera bilens position
+    requestAnimationFrame(gameLoop); // Fortsätt spel-loopen
+}
