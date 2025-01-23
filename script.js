@@ -1,11 +1,15 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Bilens startposition på den vita körbanan
-let carX = 400; // Körbanans centrum (X)
-let carY = 100; // Längst upp på banan (centrum - yttre radie)
+// Bilens position och inställningar
+let carX = 400; // Startposition X (mitt på banan)
+let carY = 100; // Startposition Y (radie = centrum - 200)
+const carWidth = 20; // Bilens bredd
+const carHeight = 20; // Bilens höjd
 let carSpeed = 3; // Bilens hastighet
 let keys = {};
+
+// Registrera tangenttryckningar
 document.addEventListener("keydown", (e) => keys[e.key] = true);
 document.addEventListener("keyup", (e) => keys[e.key] = false);
 
@@ -31,15 +35,15 @@ function drawTrack() {
 // Rita bilen som en rektangel
 function drawCar() {
     ctx.fillStyle = "red"; // Bilens färg
-    ctx.fillRect(carX, carY, 20, 20); // Rita bilen som en liten kvadrat
+    ctx.fillRect(carX, carY, carWidth, carHeight); // Rita bilen som en liten kvadrat
 }
 
 // Kontrollera om bilen är på banan
 function isCarOnTrack(x, y) {
-    // Avstånd från bilens mittpunkt till banans centrum
-    const dx = x - 400;
-    const dy = y - 300;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    // Beräkna avståndet från bilens mittpunkt till banans centrum
+    const dx = x - 400; // Avstånd i X-led från centrum
+    const dy = y - 300; // Avstånd i Y-led från centrum
+    const distance = Math.sqrt(dx * dx + dy * dy); // Avståndet från bilens mittpunkt till banans centrum
 
     // Kontrollera om bilen är mellan den inre och yttre cirkeln
     return distance >= 100 && distance <= 200;
@@ -57,20 +61,20 @@ function updateCar() {
     if (keys["ArrowRight"]) newCarX += carSpeed;
 
     // Kontrollera om bilen är på banan
-    if (isCarOnTrack(newCarX + 10, newCarY + 10)) { // Kontrollera bilens mittpunkt
+    if (isCarOnTrack(newCarX + carWidth / 2, newCarY + carHeight / 2)) { // Kontrollera bilens mittpunkt
         carX = newCarX;
         carY = newCarY;
     } else {
         // Om bilen är utanför banan, starta om
-        alert("Du körde av banan! Startar om...");
         resetCar();
     }
 }
 
 // Starta om bilen från början (på banan)
 function resetCar() {
-    carX = 400; // Körbanans centrum (X)
-    carY = 100; // Längst upp på banan (centrum - yttre radie)
+    alert("Du körde av banan! Startar om...");
+    carX = 400; // Startposition X (mitt på banan)
+    carY = 100; // Startposition Y (radie = centrum - 200)
 }
 
 // Spelloopen
