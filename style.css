@@ -10,50 +10,51 @@ body {
 }
 
 #game-container {
-    text-align: center;
     position: relative;
+    text-align: center;
 }
 
 #clock-box {
     position: absolute;
-    top: 10px; /* Placera högst upp */
-    left: 50%; /* Centrera horisontellt */
-    transform: translateX(-50%); /* Flytta till mitten */
-    width: 95%; /* Bredden för att täcka nästan hela skärmen */
+    top: 120px; /* Flytta displayen närmare banan */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%; /* Bredd för att rymma varvtider */
     padding: 10px;
-    background-color: #fff; /* Vit bakgrund för klockrutan */
-    border-radius: 5px; /* Rundade hörn */
-    text-align: left;
+    background-color: #fff; /* Vit bakgrund för klockdisplayen */
+    border-radius: 5px;
+    text-align: center; /* Centrera texten */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
-    color: #000; /* Svart text */
+    color: #000;
     font-size: 14px;
-    z-index: 10; /* Placera ovanpå canvasen */
+    z-index: 10;
 }
 
 #clock-box div {
-    margin: 5px 0; /* Mellanrum mellan raderna */
+    margin: 5px 0;
 }
 
 #lap-times ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    display: flex; /* Gör så att varvtiderna placeras i en vågrät rad */
+    display: flex; /* Placera varvtiderna i en rad */
+    justify-content: flex-end; /* Börja från höger och läs mot vänster */
     flex-wrap: wrap; /* Radbrytning vid behov */
     gap: 10px; /* Mellanrum mellan varvtider */
 }
 
 #lap-list li {
-    background-color: #f0f0f0; /* Ljus bakgrund för varvtider */
+    background-color: #f0f0f0;
     padding: 5px 10px;
-    border-radius: 3px; /* Rundade hörn */
+    border-radius: 3px;
     font-size: 14px;
-    color: #000; /* Svart text */
-    white-space: nowrap; /* Förhindra att tiderna bryts mitt i texten */
+    color: #000;
+    white-space: nowrap;
 }
 
 #gameCanvas {
-    background-color: #000; /* Svart bakgrund */
+    background-color: #000;
     border: 5px solid #fff;
-    margin-top: 150px; /* Ge utrymme för klockdisplayen */
+    margin-top: 50px; /* Ge utrymme för varvtider ovanför banan */
 }
