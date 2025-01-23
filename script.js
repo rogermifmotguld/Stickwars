@@ -9,13 +9,11 @@ const carHeight = 20; // Bilens höjd
 let carSpeed = 3; // Bilens hastighet
 let keys = {}; // För tangenttryckningar
 let isRestarting = false; // Indikator för om spelet är i omstartsfas
-let carIsMoving = false; // Indikator för om bilen är i rörelse
 
 // Registrera tangenttryckningar
 document.addEventListener("keydown", (e) => {
     if (!isRestarting) {
         keys[e.key] = true;
-        carIsMoving = true; // Börja röra bilen när en tangent trycks ner
     }
 });
 document.addEventListener("keyup", (e) => {
@@ -66,12 +64,10 @@ function updateCar() {
     let newCarY = carY;
 
     // Flytta bilen baserat på tangenttryckningar
-    if (carIsMoving) {
-        if (keys["ArrowUp"]) newCarY -= carSpeed;
-        if (keys["ArrowDown"]) newCarY += carSpeed;
-        if (keys["ArrowLeft"]) newCarX -= carSpeed;
-        if (keys["ArrowRight"]) newCarX += carSpeed;
-    }
+    if (keys["ArrowUp"]) newCarY -= carSpeed;
+    if (keys["ArrowDown"]) newCarY += carSpeed;
+    if (keys["ArrowLeft"]) newCarX -= carSpeed;
+    if (keys["ArrowRight"]) newCarX += carSpeed;
 
     // Kontrollera om bilen är på banan
     if (isCarOnTrack(newCarX + carWidth / 2, newCarY + carHeight / 2)) { // Kontrollera bilens mittpunkt
@@ -85,18 +81,18 @@ function updateCar() {
 
 // Starta om bilen från början (på den vita körbanan)
 function resetCar() {
+    if (isRestarting) return; // Om en omstart redan pågår, gör inget
+
     isRestarting = true; // Sätt spelet i omstartsfas
-    carIsMoving = false; // Stoppa bilens rörelse
+    keys = {}; // Rensa alla tangenttryckningar för att förhindra oönskad rörelse
+
     alert("Du körde av banan! Startar om...");
-    
+
     // Återställ bilens position till startpunkten
     carX = 400; // Startposition X (mitt på banan)
     carY = 100; // Startposition Y (radie = centrum - 200)
-    
-    // Rensa alla tangenttryckningar
-    keys = {}; 
-    
-    // Pausa spelet kort innan spelaren kan börja köra igen
+
+    // Vänta kort innan spelaren kan börja köra igen
     setTimeout(() => {
         isRestarting = false; // Avsluta omstartsfasen
     }, 500); // Pausa spelet i 500 ms
