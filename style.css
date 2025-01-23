@@ -3,21 +3,29 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     background-color: #000; /* Svart bakgrund */
-    color: #fff;
+    color: #fff; /* Vit text */
 }
 
 #game-container {
-    position: relative;
     text-align: center;
 }
 
+#timers {
+    margin-bottom: 10px; /* Ger utrymme mellan klockorna och canvasen */
+}
+
+#timers div {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #0F0; /* Grön text */
+}
+
 #gameCanvas {
-    display: block;
     background-color: #000; /* Svart bakgrund */
-    margin: 0 auto;
     border: 5px solid #fff;
 }
