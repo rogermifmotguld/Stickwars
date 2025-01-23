@@ -2,22 +2,22 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Inställningar för bilens position och dimensioner
-const carWidth = 20; 
-const carHeight = 20; 
-let carX = 400 - carWidth / 2; 
-let carY = 90; 
-let carSpeed = 3; 
-let keys = {}; 
+const carWidth = 20;
+const carHeight = 20;
+let carX = 400 - carWidth / 2;
+let carY = 90;
+let carSpeed = 3;
+let keys = {};
 let isRestarting = false;
 
 // Klockor och tidmätning
-let lapStartTime = Date.now(); 
-let totalLapTime = 0; 
-let currentLapTime = 0; 
-let lapCounter = 0; // Varvräknare
-const maxLaps = 10; // Max antal varv
-const lapTimes = []; // Lista för att lagra varvtider
-let hasLeftStartLine = false; 
+let lapStartTime = Date.now();
+let totalLapTime = 0;
+let currentLapTime = 0;
+let lapCounter = 0;
+const maxLaps = 10;
+const lapTimes = [];
+let hasLeftStartLine = false;
 
 // Element för att visa information
 const currentLapTimeDisplay = document.getElementById("current-lap-time");
@@ -73,6 +73,7 @@ function isCarOnTrack(x, y) {
     return distance >= 100 && distance <= 200;
 }
 
+// Funktion för att registrera ett varv
 function registerLap() {
     if (lapCounter >= maxLaps) {
         alert("Du har slutfört alla 10 varv!");
@@ -91,14 +92,21 @@ function registerLap() {
     lapItem.textContent = `Varv ${lapCounter}: ${currentLap.toFixed(2)} s`;
     lapList.appendChild(lapItem);
 
+    console.log(`Varv ${lapCounter} registrerat: ${currentLap.toFixed(2)} s`);
+
     // Nollställ aktuell varvtid
     lapStartTime = Date.now();
     currentLapTime = 0;
 }
 
+// Kontrollera om bilen korsar startlinjen
 function checkIfCrossingStartLine() {
+    console.log(`Bilens position: carX=${carX}, carY=${carY}, hasLeftStartLine=${hasLeftStartLine}`);
+
     if (carY <= 120 && carY >= 100 && carX >= 380 && carX <= 420) {
+        console.log("Bilen korsar startlinjen.");
         if (hasLeftStartLine) {
+            console.log("Registrerar ett varv...");
             registerLap(); // Registrera varvet
         }
         hasLeftStartLine = true;
@@ -138,7 +146,7 @@ function resetCar() {
     alert("Du körde av banan! Startar om...");
 
     carX = 400 - carWidth / 2;
-    carY = 90; 
+    carY = 90;
 
     keys = {};
     hasLeftStartLine = false;
