@@ -36,11 +36,9 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startpunkt
-    ctx.beginPath();
+    // Rita grön startpunkt som en rektangel
     ctx.fillStyle = "#0F0"; // Grön färg
-    ctx.arc(400, 100, 10, 0, Math.PI * 2); // Liten cirkel på radien 200
-    ctx.fill();
+    ctx.fillRect(400 - carWidth / 2, 100 - carHeight / 2, carWidth, carHeight);
 }
 
 // Rita bilen
