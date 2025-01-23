@@ -36,12 +36,12 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startlinje (endast vid startområdet)
+    // Rita grön startlinje (endast på övre delen av banan)
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
     ctx.lineWidth = 20; // Linjens tjocklek
     ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie (toppen)
-    ctx.lineTo(400, 120); // Sluta precis bakom bilens startposition
+    ctx.lineTo(400, 180); // Sluta vid övre delen av banan
     ctx.stroke();
 }
 
