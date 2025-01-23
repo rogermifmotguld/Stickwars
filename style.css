@@ -3,23 +3,23 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
     background-color: #000; /* Svart bakgrund */
     color: #fff; /* Vit text */
 }
 
 #game-container {
-    position: relative;
     text-align: center;
+    position: relative;
 }
 
 #clock-box {
     position: absolute;
     top: 10px; /* Placera högst upp */
-    right: 10px; /* Placera längst till höger */
-    width: 300px; /* Öka bredden för att rymma varvtider */
+    left: 50%; /* Centrera horisontellt */
+    transform: translateX(-50%); /* Flytta till mitten */
+    width: 95%; /* Bredden för att täcka nästan hela skärmen */
     padding: 10px;
     background-color: #fff; /* Vit bakgrund för klockrutan */
     border-radius: 5px; /* Rundade hörn */
@@ -38,14 +38,21 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
+    display: flex;
+    flex-wrap: wrap; /* Gör så att listan går på flera rader */
+    gap: 10px; /* Mellanrum mellan varv */
 }
 
 #lap-list li {
+    background-color: #f0f0f0; /* Ljus bakgrund för varvtider */
+    padding: 5px 10px;
+    border-radius: 3px; /* Rundade hörn */
     font-size: 14px;
-    margin-bottom: 5px;
+    color: #000; /* Svart text */
 }
 
 #gameCanvas {
     background-color: #000; /* Svart bakgrund */
     border: 5px solid #fff;
+    margin-top: 150px; /* Ge utrymme för klockdisplayen */
 }
