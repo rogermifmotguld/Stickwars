@@ -5,29 +5,29 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Placera sektionerna med maximalt avstånd */
-    height: 100vh; /* Full höjd på fönstret */
+    justify-content: space-between; /* Maximera avståndet mellan element */
+    height: 120vh; /* Gör sidan högre för att ge mer utrymme */
     background-color: #000; /* Svart bakgrund */
     color: #fff; /* Vit text */
 }
 
 #clock-box {
-    position: fixed; /* Fäst displayen längst upp på skärmen */
-    top: 0; /* Placera längst upp */
+    position: fixed; /* Fäst klockan längst upp */
+    top: 0; /* Placera klockan mot överkanten */
     left: 0;
-    width: 100%; /* Gör displayen lika bred som hela fönstret */
-    padding: 10px;
+    width: 100%; /* Gör klockan lika bred som hela skärmen */
+    padding: 5px; /* Minska klockans höjd */
     background-color: #fff; /* Vit bakgrund för klockdisplayen */
-    border-bottom: 2px solid #ccc; /* Liten kantlinje under displayen */
+    border-bottom: 2px solid #ccc; /* Liten kantlinje under klockan */
     text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Svagare skugga */
     color: #000; /* Svart text */
-    font-size: 14px;
+    font-size: 12px; /* Minska textstorleken för klockan */
     z-index: 10; /* Placera ovanpå allt annat */
 }
 
 #clock-box div {
-    margin: 5px 0; /* Mellanrum mellan raderna */
+    margin: 3px 0; /* Mindre mellanrum mellan raderna */
 }
 
 #lap-times ul {
@@ -36,14 +36,14 @@ body {
     list-style: none;
     display: flex; /* Visa varvtiderna i en rad */
     flex-wrap: wrap; /* Radbrytning vid behov */
-    gap: 10px; /* Mellanrum mellan varvtider */
+    gap: 5px; /* Mindre mellanrum mellan varvtider */
 }
 
 #lap-list li {
     background-color: #f0f0f0;
-    padding: 5px 10px;
+    padding: 3px 6px; /* Minska storleken på varvtidens rutor */
     border-radius: 3px;
-    font-size: 14px;
+    font-size: 12px; /* Mindre textstorlek */
     color: #000;
     white-space: nowrap;
 }
@@ -54,6 +54,7 @@ body {
     align-items: flex-end; /* Placera banan längst ned */
     flex-grow: 1; /* Gör så att banan fyller ut det resterande utrymmet */
     width: 100%;
+    margin-top: 80px; /* Ge extra utrymme mellan klockan och banan */
 }
 
 #gameCanvas {
