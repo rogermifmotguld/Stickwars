@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 // Inställningar för bilens position och dimensioner
 const carWidth = 20; // Bilens bredd
 const carHeight = 20; // Bilens höjd
-let carX = 400 - carWidth / 2; // Startposition X (mitten av banan, centrerad på startlinjen)
+let carX = 400 - carWidth / 2; // Startposition X (centrerad på startlinjen)
 let carY = 90; // Startposition Y (precis ovanför startlinjen)
 let carSpeed = 3; // Bilens hastighet
 let keys = {}; // För tangenttryckningar
@@ -36,12 +36,12 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startlinje
+    // Rita grön start-/mållinje
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
     ctx.lineWidth = 5; // Tjocklek på linjen
-    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie
-    ctx.lineTo(400, 300); // Sluta vid inre cirkelns radie
+    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie (toppen av banan)
+    ctx.lineTo(400, 300); // Sluta vid inre cirkelns radie (centrum av banan)
     ctx.stroke();
 }
 
