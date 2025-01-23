@@ -48,12 +48,12 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startlinje (nu i korrekt längd och placering)
+    // Rita grön startlinje (slutar vid kanten av den vita banan)
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
     ctx.lineWidth = 20; // Linjens tjocklek
     ctx.moveTo(400, 100); // Börja vid banans ytterkant (radie 200)
-    ctx.lineTo(400, 300); // Sluta vid banans inre kant (radie 100)
+    ctx.lineTo(400, 200); // Sluta vid banans inre kant (radie 100)
     ctx.stroke();
 }
 
@@ -144,4 +144,13 @@ function resetCar() {
 
 // Spelloopen
 function gameLoop() {
-    ctx.clearRect(0, 
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
+    drawTrack(); // Rita banan och startlinjen
+    drawCar(); // Rita bilen
+    updateCar(); // Uppdatera bilens position
+    updateTimers(); // Uppdatera klockor
+    requestAnimationFrame(gameLoop); // Kör nästa iteration
+}
+
+// Starta spelloopen
+gameLoop();
