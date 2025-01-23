@@ -48,12 +48,20 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startlinje (slutar vid kanten av den vita banan)
+    // Rita grön linje från banans ytterkant till kanten av den svarta cirkeln
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
     ctx.lineWidth = 20; // Linjens tjocklek
-    ctx.moveTo(400, 100); // Börja vid banans ytterkant (radie 200)
-    ctx.lineTo(400, 200); // Sluta vid banans inre kant (radie 100)
+    ctx.moveTo(400, 100); // Start vid banans ytterkant (radie 200)
+    ctx.lineTo(400, 200); // Slutar vid kanten av den svarta cirkeln (radie 100)
+    ctx.stroke();
+
+    // Rita svart linje från kanten av den svarta cirkeln till mitten
+    ctx.beginPath();
+    ctx.strokeStyle = "#000"; // Svart färg
+    ctx.lineWidth = 20; // Samma tjocklek
+    ctx.moveTo(400, 200); // Start vid kanten av den svarta cirkeln (radie 100)
+    ctx.lineTo(400, 300); // Slutar i mitten
     ctx.stroke();
 }
 
