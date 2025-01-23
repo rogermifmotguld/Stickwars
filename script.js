@@ -101,6 +101,8 @@ function checkIfCrossingStartLine() {
             lapStartTime = Date.now();
         }
         hasLeftStartLine = true; // Markera att bilen har korsat linjen
+    } else {
+        hasLeftStartLine = false; // Återställ när bilen lämnar linjen
     }
 }
 
