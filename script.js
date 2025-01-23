@@ -170,5 +170,5 @@ function gameLoop() {
     requestAnimationFrame(gameLoop); // Fortsätt spel-loopen
 }
 
-
 gameLoop(); // Starta spel-loopen
+console.log("gameLoop körs");
