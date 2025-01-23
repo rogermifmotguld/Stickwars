@@ -17,8 +17,8 @@ body {
 
 #clock-box {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 10px; /* Placera högst upp */
+    right: 10px; /* Placera längst till höger */
     width: 200px;
     padding: 10px;
     background-color: #fff; /* Vit bakgrund för klockrutan */
@@ -27,6 +27,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
     color: #000; /* Svart text */
     font-size: 14px;
+    z-index: 10; /* Placera ovanpå canvasen */
 }
 
 #clock-box div {
