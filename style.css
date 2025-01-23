@@ -12,16 +12,18 @@ body {
 }
 
 #clock-box {
-    width: 95%; /* Bredden för att täcka nästan hela skärmen */
+    position: fixed; /* Fäst displayen längst upp på skärmen */
+    top: 0; /* Placera längst upp */
+    left: 0;
+    width: 100%; /* Gör displayen lika bred som hela fönstret */
     padding: 10px;
     background-color: #fff; /* Vit bakgrund för klockdisplayen */
-    border-radius: 5px; /* Rundade hörn */
+    border-bottom: 2px solid #ccc; /* Liten kantlinje under displayen */
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
     color: #000; /* Svart text */
     font-size: 14px;
-    z-index: 10;
-    margin-top: 10px; /* Ge lite utrymme från toppen */
+    z-index: 10; /* Placera ovanpå allt annat */
 }
 
 #clock-box div {
