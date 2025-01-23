@@ -122,4 +122,4 @@ function gameLoop() {
 }
 
 gameLoop(); // Starta spel-loopen
-console.log("gameLoop körs"); // Kontrollera att loopen startar
+console.log("gameLoop körs");
