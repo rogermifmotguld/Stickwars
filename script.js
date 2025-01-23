@@ -1,9 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Bilens position och inställningar
-let carX = 400; // Startposition X (mitt på banan)
-let carY = 100; // Startposition Y (radie = centrum - 200)
+// Inställningar för bilens position och dimensioner
+let carX = 400; // Startposition X (på den vita körbanan, radien 200)
+let carY = 100; // Startposition Y (radie 200 från centrum)
 const carWidth = 20; // Bilens bredd
 const carHeight = 20; // Bilens höjd
 let carSpeed = 3; // Bilens hastighet
@@ -43,7 +43,7 @@ function isCarOnTrack(x, y) {
     // Beräkna avståndet från bilens mittpunkt till banans centrum
     const dx = x - 400; // Avstånd i X-led från centrum
     const dy = y - 300; // Avstånd i Y-led från centrum
-    const distance = Math.sqrt(dx * dx + dy * dy); // Avståndet från bilens mittpunkt till banans centrum
+    const distance = Math.sqrt(dx * dx + dy * dy); // Avstånd från centrum
 
     // Kontrollera om bilen är mellan den inre och yttre cirkeln
     return distance >= 100 && distance <= 200;
@@ -70,7 +70,7 @@ function updateCar() {
     }
 }
 
-// Starta om bilen från början (på banan)
+// Starta om bilen från början (på den vita körbanan)
 function resetCar() {
     alert("Du körde av banan! Startar om...");
     carX = 400; // Startposition X (mitt på banan)
