@@ -10,6 +10,16 @@ let carSpeed = 3; // Bilens hastighet
 let keys = {}; // För tangenttryckningar
 let isRestarting = false; // Indikator för om spelet är i omstartsfas
 
+// Klockor och tidmätning
+let startTime = Date.now(); // När spelet börjar
+let lapStartTime = Date.now(); // När ett varv börjar
+let bestLapTime = Infinity; // Bästa varvtiden
+let totalTime = 0; // Total tid
+
+// Element för att visa klockorna
+const lapTimeDisplay = document.getElementById("lap-time");
+const totalTimeDisplay = document.getElementById("total-time");
+
 // Registrera tangenttryckningar
 document.addEventListener("keydown", (e) => {
     if (!isRestarting) keys[e.key] = true;
@@ -51,6 +61,15 @@ function drawCar() {
     ctx.fillRect(carX, carY, carWidth, carHeight);
 }
 
+// Uppdatera klockor
+function updateTimers() {
+    // Beräkna total tid
+    totalTime = (Date.now() - startTime) / 1000;
+
+    // Uppdatera visningen av total tid
+    totalTimeDisplay.textContent = `Total Tid: ${totalTime.toFixed(2)} s`;
+}
+
 // Kontrollera om bilen är på banan
 function isCarOnTrack(x, y) {
     const dx = x - 400; // Avstånd från banans centrum i X-led
@@ -81,6 +100,18 @@ function updateCar() {
     if (isCarOnTrack(carCenterX, carCenterY)) {
         carX = newCarX;
         carY = newCarY;
+
+        // Kontrollera om bilen korsar startlinjen (y = 100)
+        if (carY <= 120 && carY >= 100) {
+            const currentLapTime = (Date.now() - lapStartTime) / 1000;
+            lapStartTime = Date.now(); // Starta en ny varv-tidmätning
+
+            // Uppdatera bästa varvtiden
+            if (currentLapTime < bestLapTime) {
+                bestLapTime = currentLapTime;
+                lapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
+            }
+        }
     } else {
         resetCar();
     }
@@ -112,6 +143,7 @@ function gameLoop() {
     drawTrack(); // Rita banan och startlinjen
     drawCar(); // Rita bilen
     updateCar(); // Uppdatera bilens position
+    updateTimers(); // Uppdatera klockor
     requestAnimationFrame(gameLoop); // Kör nästa iteration
 }
 
