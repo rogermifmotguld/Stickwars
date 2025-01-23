@@ -3,26 +3,34 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
     background-color: #000; /* Svart bakgrund */
     color: #fff; /* Vit text */
 }
 
 #game-container {
+    position: relative;
     text-align: center;
 }
 
-#timers {
-    margin-bottom: 10px; /* Ger utrymme mellan klockorna och canvasen */
+#clock-box {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    padding: 10px;
+    background-color: #fff; /* Vit bakgrund för klockrutan */
+    border-radius: 5px; /* Rundade hörn */
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
+    color: #000; /* Svart text */
+    font-size: 14px;
 }
 
-#timers div {
-    font-size: 18px;
-    margin: 5px 0;
-    color: #0F0; /* Grön text */
+#clock-box div {
+    margin: 5px 0; /* Mellanrum mellan raderna */
 }
 
 #gameCanvas {
