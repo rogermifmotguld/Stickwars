@@ -42,12 +42,6 @@ function drawTrack() {
     ctx.arc(400, 300, 200, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita svart inre cirkel (centrum)
-    ctx.beginPath();
-    ctx.fillStyle = "#000";
-    ctx.arc(400, 300, 100, 0, Math.PI * 2);
-    ctx.fill();
-
     // Rita grön linje från banans ytterkant till kanten av den svarta cirkeln
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
@@ -55,6 +49,12 @@ function drawTrack() {
     ctx.moveTo(400, 100); // Start vid banans ytterkant (radie 200)
     ctx.lineTo(400, 200); // Sluta vid kanten av den svarta cirkeln (radie 100)
     ctx.stroke();
+
+    // Rita svart inre cirkel (centrum) sist för att täcka över allt innanför banan
+    ctx.beginPath();
+    ctx.fillStyle = "#000"; // Svart färg
+    ctx.arc(400, 300, 100, 0, Math.PI * 2); // Radie 100
+    ctx.fill();
 }
 
 // Rita bilen
