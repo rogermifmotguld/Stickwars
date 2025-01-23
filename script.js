@@ -61,6 +61,16 @@ function updateDisplay() {
     document.getElementById("level").textContent = `Nivå: ${level}`;
     document.getElementById("laps").textContent = `Varv: ${laps}`;
 }
+function isCarOnTrack(x, y) {
+    // Kontrollera om bilen är utanför banans område
+    if (
+        x < 100 || x + 40 > 700 || // Yttre gränser
+        (x > 200 && x + 40 < 600 && y > 200 && y + 20 < 400) // Inre område
+    ) {
+        return false; // Bilen är utanför banan
+    }
+    return true; // Bilen är på banan
+}
 
 function drawCar() {
     ctx.fillStyle = "red";
