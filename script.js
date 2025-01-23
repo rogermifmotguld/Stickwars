@@ -14,10 +14,12 @@ let isRestarting = false; // Indikator för om spelet är i omstartsfas
 let startTime = Date.now(); // När spelet börjar
 let lapStartTime = Date.now(); // När ett varv börjar
 let bestLapTime = Infinity; // Bästa varvtiden
-let totalTime = 0; // Total tid
+let totalLapTime = 0; // Total tid för alla varv
+let currentLapTime = 0; // Tid för aktuellt varv
 
 // Element för att visa klockorna
-const lapTimeDisplay = document.getElementById("lap-time");
+const currentLapTimeDisplay = document.getElementById("current-lap-time");
+const bestLapTimeDisplay = document.getElementById("best-lap-time");
 const totalTimeDisplay = document.getElementById("total-time");
 
 // Registrera tangenttryckningar
@@ -63,10 +65,12 @@ function drawCar() {
 
 // Uppdatera klockor
 function updateTimers() {
-    // Beräkna total tid
-    totalTime = (Date.now() - startTime) / 1000;
+    // Beräkna aktuell varvtid
+    currentLapTime = (Date.now() - lapStartTime) / 1000;
+    currentLapTimeDisplay.textContent = `Aktuell Varvtid: ${currentLapTime.toFixed(2)} s`;
 
     // Uppdatera visningen av total tid
+    const totalTime = totalLapTime + currentLapTime;
     totalTimeDisplay.textContent = `Total Tid: ${totalTime.toFixed(2)} s`;
 }
 
@@ -103,13 +107,14 @@ function updateCar() {
 
         // Kontrollera om bilen korsar startlinjen (y = 100)
         if (carY <= 120 && carY >= 100) {
-            const currentLapTime = (Date.now() - lapStartTime) / 1000;
+            const currentLap = (Date.now() - lapStartTime) / 1000;
+            totalLapTime += currentLap; // Lägg till aktuell varvtid till totalen
             lapStartTime = Date.now(); // Starta en ny varv-tidmätning
 
             // Uppdatera bästa varvtiden
-            if (currentLapTime < bestLapTime) {
-                bestLapTime = currentLapTime;
-                lapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
+            if (currentLap < bestLapTime) {
+                bestLapTime = currentLap;
+                bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
             }
         }
     } else {
