@@ -1,8 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let carX = 100; 
-let carY = 300;
+let carX = 150;
+let carY = 400;
 let carSpeed = 5;
 let laps = 0;
 let level = 1;
@@ -11,27 +11,6 @@ let score = 0;
 let keys = {};
 document.addEventListener("keydown", (e) => keys[e.key] = true);
 document.addEventListener("keyup", (e) => keys[e.key] = false);
-function drawTrack() {
-    // Rita bakgrunden
-    ctx.fillStyle = "#555"; // Bakgrundsfärg
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Rita banans område
-    ctx.fillStyle = "#222"; // Banans färg
-    ctx.beginPath();
-    ctx.rect(100, 100, 600, 400); // Yttre rektangel
-    ctx.fill();
-
-    // Rita gränser (inre område)
-    ctx.fillStyle = "#555"; // Inre område
-    ctx.beginPath();
-    ctx.rect(200, 200, 400, 200); // Inre rektangel
-    ctx.fill();
-
-// Rita mållinjen
-ctx.fillStyle = "white"; // Mållinjens färg
-ctx.fillRect(300, 480, 200, 10); // Placera en vågrät mållinje
-
 
 const questions = [
     {
@@ -44,81 +23,50 @@ const questions = [
         correct: 1,
         explanation: "Förnuft innebär logik och kritiskt tänkande, centralt för upplysningen."
     },
-    {
-        question: "Vad innebär begreppet samhällskontrakt?",
-        answers: [
-            "En överenskommelse mellan folket och staten.",
-            "Ett avtal som avskaffar friheter.",
-            "En filosofi som förbjuder jämlikhet."
-        ],
-        correct: 0,
-        explanation: "Samhällskontraktet innebär att människor ger upp vissa friheter för skydd och ordning."
-    }
+    // Lägg till fler frågor här
 ];
 
-function updateDisplay() {
-    document.getElementById("score").textContent = `Poäng: ${score}`;
-    document.getElementById("level").textContent = `Nivå: ${level}`;
-    document.getElementById("laps").textContent = `Varv: ${laps}`;
+function drawTrack() {
+    // Rita bakgrunden
+    ctx.fillStyle = "#555"; // Bakgrundsfärg
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Rita banans område
+    ctx.fillStyle = "#222"; // Banans färg
+    ctx.beginPath();
+    ctx.rect(100, 100, 600, 400); // Yttre rektangel
+    ctx.fill();
+
+    // Rita mållinjen
+    ctx.fillStyle = "white"; // Mållinjens färg
+    ctx.fillRect(300, 480, 200, 10); // Placera en vågrät mållinje
 }
-function isCarOnTrack(x, y) {
-    // Kontrollera om bilen är utanför banans område
-    if (
-        x < 100 || x + 40 > 700 || // Yttre gränser
-        (x > 200 && x + 40 < 600 && y > 200 && y + 20 < 400) // Inre område
-    ) {
-        return false; // Bilen är utanför banan
-    }
-    return true; // Bilen är på banan
+
+function drawCar() {
+    ctx.fillStyle = "red"; // Bilens färg
+    ctx.fillRect(carX, carY, 40, 20); // Rita bilen som en rektangel
 }
+
+function isCarOnTrack(newCarX, newCarY) {
+    return (newCarX >= 100 && newCarX <= 700 && newCarY >= 100 && newCarY <= 500);
+}
+
 function updateCar() {
     let newCarX = carX;
     let newCarY = carY;
 
-    // Uppdatera bilens position baserat på tangenttryckningar
     if (keys["ArrowUp"]) newCarY -= carSpeed;
     if (keys["ArrowDown"]) newCarY += carSpeed;
     if (keys["ArrowLeft"]) newCarX -= carSpeed;
     if (keys["ArrowRight"]) newCarX += carSpeed;
 
-    // Kontrollera om bilen är på banan
     if (isCarOnTrack(newCarX, newCarY)) {
         carX = newCarX;
         carY = newCarY;
     }
 
-    // Kontrollera om bilen passerar mållinjen
-    if (carX > 650 && carX < 660 && carY > 300 && carY < 400) {
-        carX = 150; // Flytta tillbaka till start
-        laps++; // Öka antal varv
-        score += level; // Lägg till poäng
-        updateDisplay(); // Uppdatera poängvisningen
-
-        // Visa fråga vid varje 10:e varv
-        if (laps % 10 === 0) {
-            showQuestion();
-        }
-    }
-}
-
-function drawCar() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(carX, carY, 40, 20);
-}
-
-function updateCar() {
-    if (keys["ArrowUp"]) carY -= carSpeed;
-    if (keys["ArrowDown"]) carY += carSpeed;
-    if (keys["ArrowLeft"]) carX -= carSpeed;
-    if (keys["ArrowRight"]) carX += carSpeed;
-
-    if (carX < 0) carX = 0;
-    if (carX > canvas.width - 40) carX = canvas.width - 40;
-    if (carY < 0) carY = 0;
-    if (carY > canvas.height - 20) carY = canvas.height - 20;
-
-    if (carX > 750) {
-        carX = 100;
+    if (carX > 300 && carX < 500 && carY > 480 && carY < 490) { // Kontrollera mållinjen
+        carX = 150; // Flytta tillbaka bilen till startposition
         laps++;
         score += level;
         updateDisplay();
@@ -129,41 +77,44 @@ function updateCar() {
     }
 }
 
+function updateDisplay() {
+    document.getElementById("laps").innerText = laps;
+    document.getElementById("level").innerText = level;
+    document.getElementById("score").innerText = score;
+}
+
 function showQuestion() {
-    const questionIndex = Math.floor(Math.random() * questions.length);
-    const currentQuestion = questions[questionIndex];
+    const question = questions[Math.floor(Math.random() * questions.length)];
+    const questionText = document.getElementById("question-text");
+    const answersDiv = document.getElementById("answers");
 
-    document.getElementById("question-text").textContent = currentQuestion.question;
+    questionText.innerText = question.question;
+    answersDiv.innerHTML = "";
 
-    const answerButtons = document.querySelectorAll(".answer");
-    answerButtons.forEach((button, index) => {
-        button.textContent = currentQuestion.answers[index];
+    question.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.innerText = answer;
+        button.className = "answer";
         button.onclick = () => {
-            if (index === currentQuestion.correct) {
+            if (index === question.correct) {
+                alert("Rätt svar! " + question.explanation);
                 level++;
-                score += level * 10;
                 laps = 0;
+                score += level * 10;
+                updateDisplay();
             } else {
-                alert(`Fel svar! ${currentQuestion.explanation}`);
+                alert("Fel svar! " + question.explanation);
             }
             document.getElementById("question-container").classList.add("hidden");
-            updateDisplay();
         };
+        answersDiv.appendChild(button);
     });
 
     document.getElementById("question-container").classList.remove("hidden");
 }
 
-updateDisplay();
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
-    function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
-
-    // Test: Rita en blå rektangel
-    ctx.fillStyle = "blue";
-    ctx.fillRect(50, 50, 100, 100);
-
     drawTrack(); // Rita banan
     drawCar(); // Rita bilen
     updateCar(); // Uppdatera bilens position
@@ -171,4 +122,4 @@ function gameLoop() {
 }
 
 gameLoop(); // Starta spel-loopen
-console.log("gameLoop körs");
+console.log("gameLoop körs"); // Kontrollera att loopen startar
