@@ -71,6 +71,35 @@ function isCarOnTrack(x, y) {
     }
     return true; // Bilen är på banan
 }
+function updateCar() {
+    let newCarX = carX;
+    let newCarY = carY;
+
+    // Uppdatera bilens position baserat på tangenttryckningar
+    if (keys["ArrowUp"]) newCarY -= carSpeed;
+    if (keys["ArrowDown"]) newCarY += carSpeed;
+    if (keys["ArrowLeft"]) newCarX -= carSpeed;
+    if (keys["ArrowRight"]) newCarX += carSpeed;
+
+    // Kontrollera om bilen är på banan
+    if (isCarOnTrack(newCarX, newCarY)) {
+        carX = newCarX;
+        carY = newCarY;
+    }
+
+    // Kontrollera om bilen passerar mållinjen
+    if (carX > 650 && carX < 660 && carY > 300 && carY < 400) {
+        carX = 150; // Flytta tillbaka till start
+        laps++; // Öka antal varv
+        score += level; // Lägg till poäng
+        updateDisplay(); // Uppdatera poängvisningen
+
+        // Visa fråga vid varje 10:e varv
+        if (laps % 10 === 0) {
+            showQuestion();
+        }
+    }
+}
 
 function drawCar() {
     ctx.fillStyle = "red";
