@@ -39,9 +39,9 @@ function drawTrack() {
     // Rita grön start-/mållinje
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
-    ctx.lineWidth = 5; // Tjocklek på linjen
+    ctx.lineWidth = 6; // Ökad tjocklek på linjen
     ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie (toppen av banan)
-    ctx.lineTo(400, 300); // Sluta vid inre cirkelns radie (centrum av banan)
+    ctx.lineTo(400, 500); // Dra linjen genom hela banans höjd
     ctx.stroke();
 }
 
