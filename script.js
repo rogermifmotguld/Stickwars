@@ -28,10 +28,10 @@ function drawTrack() {
     ctx.rect(200, 200, 400, 200); // Inre rektangel
     ctx.fill();
 
-    // Rita mållinjen
-    ctx.fillStyle = "white"; // Mållinje
-    ctx.fillRect(650, 300, 10, 100); // Placera mållinjen
-}
+// Rita mållinjen
+ctx.fillStyle = "white"; // Mållinjens färg
+ctx.fillRect(300, 480, 200, 10); // Placera en vågrät mållinje
+
 
 const questions = [
     {
