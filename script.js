@@ -15,6 +15,7 @@ let lapStartTime = Date.now(); // När ett varv börjar
 let bestLapTime = Infinity; // Bästa varvtiden
 let totalLapTime = 0; // Total tid för alla varv
 let currentLapTime = 0; // Tid för aktuellt varv
+let hasLeftStartLine = false; // Indikator för att kontrollera om bilen har lämnat startlinjen
 
 // Element för att visa klockorna
 const currentLapTimeDisplay = document.getElementById("current-lap-time");
@@ -83,20 +84,23 @@ function isCarOnTrack(x, y) {
     return distance >= 100 && distance <= 200;
 }
 
-// Kontrollera om bilen korsar startlinjen
+// Kontrollera om bilen korsar startlinjen efter att ha lämnat den
 function checkIfCrossingStartLine() {
     if (carY <= 120 && carY >= 100 && carX >= 380 && carX <= 420) {
-        // Uppdatera total varvtid
-        totalLapTime += currentLapTime;
+        if (hasLeftStartLine) {
+            // Uppdatera total varvtid
+            totalLapTime += currentLapTime;
 
-        // Kontrollera om detta är den bästa tiden
-        if (currentLapTime < bestLapTime) {
-            bestLapTime = currentLapTime;
-            bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
+            // Kontrollera om detta är den bästa tiden
+            if (currentLapTime < bestLapTime) {
+                bestLapTime = currentLapTime;
+                bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
+            }
+
+            // Starta ny varv-tidmätning
+            lapStartTime = Date.now();
         }
-
-        // Starta ny varv-tidmätning
-        lapStartTime = Date.now();
+        hasLeftStartLine = true; // Markera att bilen har korsat linjen
     }
 }
 
@@ -141,6 +145,7 @@ function resetCar() {
 
     // Nollställ tangenttryckningar
     keys = {};
+    hasLeftStartLine = false; // Återställ indikatorn för startlinjen
 
     // Vänta innan spelaren kan styra igen
     setTimeout(() => {
