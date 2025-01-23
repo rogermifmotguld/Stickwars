@@ -11,6 +11,27 @@ let score = 0;
 let keys = {};
 document.addEventListener("keydown", (e) => keys[e.key] = true);
 document.addEventListener("keyup", (e) => keys[e.key] = false);
+function drawTrack() {
+    // Rita bakgrunden
+    ctx.fillStyle = "#555"; // Bakgrundsfärg
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Rita banans område
+    ctx.fillStyle = "#222"; // Banans färg
+    ctx.beginPath();
+    ctx.rect(100, 100, 600, 400); // Yttre rektangel
+    ctx.fill();
+
+    // Rita gränser (inre område)
+    ctx.fillStyle = "#555"; // Inre område
+    ctx.beginPath();
+    ctx.rect(200, 200, 400, 200); // Inre rektangel
+    ctx.fill();
+
+    // Rita mållinjen
+    ctx.fillStyle = "white"; // Mållinje
+    ctx.fillRect(650, 300, 10, 100); // Placera mållinjen
+}
 
 const questions = [
     {
