@@ -4,8 +4,8 @@ const ctx = canvas.getContext("2d");
 // Inställningar för bilens position och dimensioner
 const carWidth = 20; // Bilens bredd
 const carHeight = 20; // Bilens höjd
-let carX = 400 - carWidth / 2; // Startposition X (centrerad på startlinjen)
-let carY = 90; // Startposition Y (precis ovanför startlinjen)
+let carX = 400 - carWidth / 2; // Startposition X (centrerad på linjen)
+let carY = 90; // Startposition Y (precis ovanför linjen)
 let carSpeed = 3; // Bilens hastighet
 let keys = {}; // För tangenttryckningar
 let isRestarting = false; // Indikator för om spelet är i omstartsfas
@@ -18,7 +18,7 @@ document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
 });
 
-// Rita den cirkulära banan och startlinjen
+// Rita banan, inklusive start-/mållinjen
 function drawTrack() {
     // Rita svart bakgrund
     ctx.fillStyle = "#000";
@@ -36,12 +36,12 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön start-/mållinje
+    // Rita tjock grön linje (start-/mållinje)
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
-    ctx.lineWidth = 6; // Ökad tjocklek på linjen
-    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie (toppen av banan)
-    ctx.lineTo(400, 500); // Dra linjen genom hela banans höjd
+    ctx.lineWidth = 20; // Linjens tjocklek är lika med bilens bredd
+    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie
+    ctx.lineTo(400, 300); // Sluta vid inre cirkelns radie
     ctx.stroke();
 }
 
@@ -93,9 +93,9 @@ function resetCar() {
     isRestarting = true;
     alert("Du körde av banan! Startar om...");
 
-    // Placera bilen ovanför startlinjen
+    // Placera bilen ovanför start-/mållinjen
     carX = 400 - carWidth / 2;
-    carY = 90; // Precis ovanför startlinjen
+    carY = 90; // Precis ovanför linjen
 
     // Nollställ tangenttryckningar
     keys = {};
