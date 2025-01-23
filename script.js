@@ -18,7 +18,7 @@ document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
 });
 
-// Rita banan, inklusive startlinjen
+// Rita banan och den gröna startlinjen
 function drawTrack() {
     // Rita svart bakgrund
     ctx.fillStyle = "#000";
@@ -36,12 +36,12 @@ function drawTrack() {
     ctx.arc(400, 300, 100, 0, Math.PI * 2);
     ctx.fill();
 
-    // Rita grön startlinje (begränsad till övre delen av banan)
+    // Rita grön startlinje (endast vid startområdet)
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
-    ctx.lineWidth = 20; // Linjens tjocklek är lika med bilens bredd
-    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie
-    ctx.lineTo(400, 120); // Sluta precis efter bilens startposition
+    ctx.lineWidth = 20; // Linjens tjocklek
+    ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie (toppen)
+    ctx.lineTo(400, 120); // Sluta precis bakom bilens startposition
     ctx.stroke();
 }
 
@@ -93,7 +93,7 @@ function resetCar() {
     isRestarting = true;
     alert("Du körde av banan! Startar om...");
 
-    // Placera bilen ovanför start-/mållinjen
+    // Placera bilen ovanför startlinjen
     carX = 400 - carWidth / 2;
     carY = 90; // Precis ovanför linjen
 
