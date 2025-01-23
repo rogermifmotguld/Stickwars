@@ -73,7 +73,6 @@ function isCarOnTrack(x, y) {
     return distance >= 100 && distance <= 200;
 }
 
-// Funktion för att registrera ett varv
 function registerLap() {
     if (lapCounter >= maxLaps) {
         alert("Du har slutfört alla 10 varv!");
@@ -99,14 +98,9 @@ function registerLap() {
     currentLapTime = 0;
 }
 
-// Kontrollera om bilen korsar startlinjen
 function checkIfCrossingStartLine() {
-    console.log(`Bilens position: carX=${carX}, carY=${carY}, hasLeftStartLine=${hasLeftStartLine}`);
-
     if (carY <= 120 && carY >= 100 && carX >= 380 && carX <= 420) {
-        console.log("Bilen korsar startlinjen.");
         if (hasLeftStartLine) {
-            console.log("Registrerar ett varv...");
             registerLap(); // Registrera varvet
         }
         hasLeftStartLine = true;
