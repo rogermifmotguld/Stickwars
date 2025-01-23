@@ -19,7 +19,7 @@ body {
     position: absolute;
     top: 10px; /* Placera högst upp */
     right: 10px; /* Placera längst till höger */
-    width: 200px;
+    width: 250px;
     padding: 10px;
     background-color: #fff; /* Vit bakgrund för klockrutan */
     border-radius: 5px; /* Rundade hörn */
