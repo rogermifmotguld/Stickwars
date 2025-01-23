@@ -155,7 +155,6 @@ function showQuestion() {
 }
 
 updateDisplay();
-gameLoop();
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
     drawTrack(); // Rita banan
@@ -163,3 +162,4 @@ function gameLoop() {
     updateCar(); // Uppdatera bilens position
     requestAnimationFrame(gameLoop); // Fortsätt spel-loopen
 }
+gameLoop(); // Starta spel-loopen
