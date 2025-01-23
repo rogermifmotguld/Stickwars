@@ -10,20 +10,23 @@ body {
 }
 
 #game-container {
+    display: flex;
+    align-items: flex-start; /* Justera innehållet till toppen */
     position: relative;
-    text-align: center;
+    width: 100%;
+    height: 100vh; /* Full höjd */
 }
 
 #clock-box {
     position: absolute;
-    top: 120px; /* Flytta displayen närmare banan */
-    left: 50%;
+    top: 10px; /* Placera högst upp */
+    left: 50%; /* Centrera horisontellt */
     transform: translateX(-50%);
     width: 95%; /* Bredd för att rymma varvtider */
     padding: 10px;
     background-color: #fff; /* Vit bakgrund för klockdisplayen */
     border-radius: 5px;
-    text-align: center; /* Centrera texten */
+    text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
     color: #000;
     font-size: 14px;
@@ -54,7 +57,11 @@ body {
 }
 
 #gameCanvas {
-    background-color: #000;
+    background-color: #000; /* Svart bakgrund */
     border: 5px solid #fff;
-    margin-top: 50px; /* Ge utrymme för varvtider ovanför banan */
+    position: absolute;
+    left: 0; /* Flytta till vänsterkanten */
+    top: 50%; /* Centrera vertikalt */
+    transform: translateY(-50%);
+    margin: 0;
 }
