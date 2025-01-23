@@ -9,10 +9,14 @@ const carHeight = 20; // Bilens höjd
 let carSpeed = 3; // Bilens hastighet
 let keys = {}; // För tangenttryckningar
 let isRestarting = false; // Indikator för om spelet är i omstartsfas
+let carIsMoving = false; // Indikator för om bilen är i rörelse
 
 // Registrera tangenttryckningar
 document.addEventListener("keydown", (e) => {
-    if (!isRestarting) keys[e.key] = true; // Endast om spelet inte startar om
+    if (!isRestarting) {
+        keys[e.key] = true;
+        carIsMoving = true; // Börja röra bilen när en tangent trycks ner
+    }
 });
 document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
@@ -62,10 +66,12 @@ function updateCar() {
     let newCarY = carY;
 
     // Flytta bilen baserat på tangenttryckningar
-    if (keys["ArrowUp"]) newCarY -= carSpeed;
-    if (keys["ArrowDown"]) newCarY += carSpeed;
-    if (keys["ArrowLeft"]) newCarX -= carSpeed;
-    if (keys["ArrowRight"]) newCarX += carSpeed;
+    if (carIsMoving) {
+        if (keys["ArrowUp"]) newCarY -= carSpeed;
+        if (keys["ArrowDown"]) newCarY += carSpeed;
+        if (keys["ArrowLeft"]) newCarX -= carSpeed;
+        if (keys["ArrowRight"]) newCarX += carSpeed;
+    }
 
     // Kontrollera om bilen är på banan
     if (isCarOnTrack(newCarX + carWidth / 2, newCarY + carHeight / 2)) { // Kontrollera bilens mittpunkt
@@ -80,6 +86,7 @@ function updateCar() {
 // Starta om bilen från början (på den vita körbanan)
 function resetCar() {
     isRestarting = true; // Sätt spelet i omstartsfas
+    carIsMoving = false; // Stoppa bilens rörelse
     alert("Du körde av banan! Startar om...");
     
     // Återställ bilens position till startpunkten
