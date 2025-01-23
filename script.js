@@ -12,17 +12,17 @@ let isRestarting = false;
 
 // Klockor och tidmätning
 let lapStartTime = Date.now(); 
-let bestLapTime = Infinity; 
 let totalLapTime = 0; 
 let currentLapTime = 0; 
 let lapCounter = 0; // Varvräknare
+const maxLaps = 10; // Max antal varv
+const lapTimes = []; // Lista för att lagra varvtider
 let hasLeftStartLine = false; 
 
 // Element för att visa information
-const lapCounterDisplay = document.getElementById("lap-counter");
 const currentLapTimeDisplay = document.getElementById("current-lap-time");
-const bestLapTimeDisplay = document.getElementById("best-lap-time");
 const totalTimeDisplay = document.getElementById("total-time");
+const lapList = document.getElementById("lap-list");
 
 document.addEventListener("keydown", (e) => {
     if (!isRestarting) keys[e.key] = true;
@@ -74,20 +74,22 @@ function isCarOnTrack(x, y) {
 }
 
 function registerLap() {
+    if (lapCounter >= maxLaps) {
+        alert("Du har slutfört alla 10 varv!");
+        return;
+    }
+
     const currentLap = (Date.now() - lapStartTime) / 1000;
 
-    // Öka varvräknaren
+    // Lägg till varvtiden i listan
+    lapTimes.push(currentLap);
     lapCounter++;
-    lapCounterDisplay.textContent = `Antal Varv: ${lapCounter}`;
-
-    // Uppdatera total tid
     totalLapTime += currentLap;
 
-    // Kontrollera om detta är bästa varvtiden
-    if (currentLap < bestLapTime) {
-        bestLapTime = currentLap;
-        bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
-    }
+    // Uppdatera varvtidslistan i displayen
+    const lapItem = document.createElement("li");
+    lapItem.textContent = `Varv ${lapCounter}: ${currentLap.toFixed(2)} s`;
+    lapList.appendChild(lapItem);
 
     // Nollställ aktuell varvtid
     lapStartTime = Date.now();
