@@ -12,7 +12,7 @@ let isRestarting = false; // Indikator för om spelet är i omstartsfas
 
 // Registrera tangenttryckningar
 document.addEventListener("keydown", (e) => {
-    if (!isRestarting) keys[e.key] = true;
+    if (!isRestarting) keys[e.key] = true; // Endast om spelet inte startar om
 });
 document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
@@ -81,12 +81,18 @@ function updateCar() {
 function resetCar() {
     isRestarting = true; // Sätt spelet i omstartsfas
     alert("Du körde av banan! Startar om...");
+    
+    // Återställ bilens position till startpunkten
     carX = 400; // Startposition X (mitt på banan)
     carY = 100; // Startposition Y (radie = centrum - 200)
-    keys = {}; // Rensa alla tangenttryckningar
+    
+    // Rensa alla tangenttryckningar
+    keys = {}; 
+    
+    // Pausa spelet kort innan spelaren kan börja köra igen
     setTimeout(() => {
-        isRestarting = false; // Avsluta omstartsfasen efter en kort paus
-    }, 500); // Pausa spelet i 500 ms innan spelaren kan röra bilen igen
+        isRestarting = false; // Avsluta omstartsfasen
+    }, 500); // Pausa spelet i 500 ms
 }
 
 // Spelloopen
