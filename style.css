@@ -5,44 +5,34 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between; /* Placera sektionerna med maximalt avstånd */
+    height: 100vh; /* Full höjd på fönstret */
     background-color: #000; /* Svart bakgrund */
     color: #fff; /* Vit text */
 }
 
-#game-container {
-    display: flex;
-    align-items: flex-start; /* Justera innehållet till toppen */
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Full höjd */
-}
-
 #clock-box {
-    position: absolute;
-    top: 10px; /* Placera högst upp */
-    left: 50%; /* Centrera horisontellt */
-    transform: translateX(-50%);
-    width: 95%; /* Bredd för att rymma varvtider */
+    width: 95%; /* Bredden för att täcka nästan hela skärmen */
     padding: 10px;
     background-color: #fff; /* Vit bakgrund för klockdisplayen */
-    border-radius: 5px;
-    text-align: center;
+    border-radius: 5px; /* Rundade hörn */
+    text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga runt rutan */
-    color: #000;
+    color: #000; /* Svart text */
     font-size: 14px;
     z-index: 10;
+    margin-top: 10px; /* Ge lite utrymme från toppen */
 }
 
 #clock-box div {
-    margin: 5px 0;
+    margin: 5px 0; /* Mellanrum mellan raderna */
 }
 
 #lap-times ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    display: flex; /* Placera varvtiderna i en rad */
-    justify-content: flex-end; /* Börja från höger och läs mot vänster */
+    display: flex; /* Visa varvtiderna i en rad */
     flex-wrap: wrap; /* Radbrytning vid behov */
     gap: 10px; /* Mellanrum mellan varvtider */
 }
@@ -56,12 +46,16 @@ body {
     white-space: nowrap;
 }
 
+#game-container {
+    display: flex;
+    justify-content: center; /* Centrera banan horisontellt */
+    align-items: flex-end; /* Placera banan längst ned */
+    flex-grow: 1; /* Gör så att banan fyller ut det resterande utrymmet */
+    width: 100%;
+}
+
 #gameCanvas {
     background-color: #000; /* Svart bakgrund */
     border: 5px solid #fff;
-    position: absolute;
-    left: 0; /* Flytta till vänsterkanten */
-    top: 50%; /* Centrera vertikalt */
-    transform: translateY(-50%);
-    margin: 0;
+    margin-bottom: 20px; /* Ge lite utrymme från botten */
 }
