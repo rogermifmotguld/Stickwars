@@ -41,7 +41,7 @@ function drawTrack() {
     ctx.strokeStyle = "#0F0"; // Grön färg
     ctx.lineWidth = 20; // Linjens tjocklek
     ctx.moveTo(400, 100); // Börja vid yttre cirkelns radie (toppen)
-    ctx.lineTo(400, 180); // Sluta vid övre delen av banan
+    ctx.lineTo(400, 120); // Sluta precis ovanför bilens startposition
     ctx.stroke();
 }
 
