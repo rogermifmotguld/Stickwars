@@ -17,5 +17,67 @@ body {
     left: 0;
     width: 100%; /* Gör displayen lika bred som hela skärmen */
     padding: 5px;
-    background-color: #fff;
-    border-bottom: 2px solid #ccc; /* Liten kantlinje und
+    background-color: #fff; /* Vit bakgrund */
+    border-bottom: 2px solid #ccc; /* Liten kantlinje under displayen */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #000;
+    font-size: 12px;
+    z-index: 10;
+}
+
+#time-row {
+    display: flex; /* Gör så att elementen ligger på samma rad */
+    justify-content: space-between; /* Sprid ut elementen */
+    align-items: center; /* Centrera vertikalt */
+    width: 100%; /* Låt raden täcka hela displayens bredd */
+    gap: 10px; /* Mellanrum mellan elementen */
+}
+
+#current-lap-time {
+    text-align: left; /* Placera texten till vänster */
+    margin-left: 10px; /* Litet avstånd från vänsterkanten */
+}
+
+#total-time {
+    text-align: right; /* Placera texten till höger */
+    margin-right: 10px; /* Litet avstånd från högerkanten */
+}
+
+#lap-times {
+    flex: 1; /* Låt varvtiderna ta upp mellanutrymmet */
+    display: flex; /* Placera varvtiderna på samma linje */
+    align-items: center;
+    gap: 10px; /* Mellanrum mellan varje varvtid */
+    overflow-x: auto; /* Lägg till rullningsmöjlighet om det inte finns tillräckligt med plats */
+    white-space: nowrap; /* Förhindra att varvtider bryts */
+}
+
+#lap-list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 10px;
+}
+
+#lap-list li {
+    background-color: #f0f0f0; /* Ljus bakgrund */
+    padding: 3px 6px;
+    border-radius: 3px; /* Rundade hörn */
+    font-size: 12px; /* Mindre textstorlek */
+    color: #000;
+    white-space: nowrap; /* Förhindra radbrytning */
+}
+
+#game-container {
+    display: flex;
+    justify-content: center; /* Centrera banan horisontellt */
+    align-items: flex-end; /* Placera banan längst ned */
+    flex-grow: 1;
+    width: 100%;
+    margin-top: 80px; /* Extra utrymme mellan displayen och banan */
+}
+
+#gameCanvas {
+    background-color: #000;
+    border: 5px so
