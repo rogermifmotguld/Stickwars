@@ -23,22 +23,21 @@ const questions = [
         correct: 1,
         explanation: "Förnuft innebär logik och kritiskt tänkande, centralt för upplysningen."
     },
-    // Lägg till fler frågor här
 ];
 
 function drawTrack() {
     // Rita bakgrunden
-    ctx.fillStyle = "#555"; // Bakgrundsfärg
+    ctx.fillStyle = "#000"; // Svart bakgrund
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Rita banans område
-    ctx.fillStyle = "#222"; // Banans färg
+    ctx.fillStyle = "#FFF"; // Vit bana
     ctx.beginPath();
     ctx.rect(100, 100, 600, 400); // Yttre rektangel
     ctx.fill();
 
     // Rita mållinjen
-    ctx.fillStyle = "white"; // Mållinjens färg
+    ctx.fillStyle = "green"; // Grön mållinje
     ctx.fillRect(300, 480, 200, 10); // Placera en vågrät mållinje
 }
 
