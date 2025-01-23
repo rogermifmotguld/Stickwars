@@ -11,7 +11,6 @@ let keys = {}; // För tangenttryckningar
 let isRestarting = false; // Indikator för om spelet är i omstartsfas
 
 // Klockor och tidmätning
-let startTime = Date.now(); // När spelet börjar
 let lapStartTime = Date.now(); // När ett varv börjar
 let bestLapTime = Infinity; // Bästa varvtiden
 let totalLapTime = 0; // Total tid för alla varv
@@ -42,6 +41,12 @@ function drawTrack() {
     ctx.arc(400, 300, 200, 0, Math.PI * 2);
     ctx.fill();
 
+    // Rita svart inre cirkel (centrum)
+    ctx.beginPath();
+    ctx.fillStyle = "#000";
+    ctx.arc(400, 300, 100, 0, Math.PI * 2);
+    ctx.fill();
+
     // Rita grön linje från banans ytterkant till kanten av den svarta cirkeln
     ctx.beginPath();
     ctx.strokeStyle = "#0F0"; // Grön färg
@@ -49,12 +54,6 @@ function drawTrack() {
     ctx.moveTo(400, 100); // Start vid banans ytterkant (radie 200)
     ctx.lineTo(400, 200); // Sluta vid kanten av den svarta cirkeln (radie 100)
     ctx.stroke();
-
-    // Rita svart inre cirkel (centrum) sist för att täcka över allt innanför banan
-    ctx.beginPath();
-    ctx.fillStyle = "#000"; // Svart färg
-    ctx.arc(400, 300, 100, 0, Math.PI * 2); // Radie 100
-    ctx.fill();
 }
 
 // Rita bilen
@@ -84,6 +83,23 @@ function isCarOnTrack(x, y) {
     return distance >= 100 && distance <= 200;
 }
 
+// Kontrollera om bilen korsar startlinjen
+function checkIfCrossingStartLine() {
+    if (carY <= 120 && carY >= 100 && carX >= 380 && carX <= 420) {
+        // Uppdatera total varvtid
+        totalLapTime += currentLapTime;
+
+        // Kontrollera om detta är den bästa tiden
+        if (currentLapTime < bestLapTime) {
+            bestLapTime = currentLapTime;
+            bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
+        }
+
+        // Starta ny varv-tidmätning
+        lapStartTime = Date.now();
+    }
+}
+
 // Uppdatera bilens position
 function updateCar() {
     if (isRestarting) return;
@@ -105,18 +121,8 @@ function updateCar() {
         carX = newCarX;
         carY = newCarY;
 
-        // Kontrollera om bilen korsar startlinjen (y = 100)
-        if (carY <= 120 && carY >= 100) {
-            const currentLap = (Date.now() - lapStartTime) / 1000;
-            totalLapTime += currentLap; // Lägg till aktuell varvtid till totalen
-            lapStartTime = Date.now(); // Starta en ny varv-tidmätning
-
-            // Uppdatera bästa varvtiden
-            if (currentLap < bestLapTime) {
-                bestLapTime = currentLap;
-                bestLapTimeDisplay.textContent = `Bästa Varvtid: ${bestLapTime.toFixed(2)} s`;
-            }
-        }
+        // Kontrollera om bilen korsar startlinjen
+        checkIfCrossingStartLine();
     } else {
         resetCar();
     }
