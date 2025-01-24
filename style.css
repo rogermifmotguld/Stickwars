@@ -1,4 +1,4 @@
-/* Grundinställningar */
+/* Grundläggande inställningar */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -9,7 +9,7 @@ body {
     color: #fff;
 }
 
-#clock-box {
+#info-box {
     position: fixed;
     top: 0;
     left: 0;
