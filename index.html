@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilspel med Tid och Varvräknare</title>
+    <title>Oval Racerbana</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="clock-box">
-        <div id="time-row">
-            <div id="elapsed-time">Tid: 0.00 s</div>
-            <div id="lap-counter">Varv: 0</div>
-        </div>
+    <header id="info-box">
+        <div id="time-display">Tid: 0.00 s</div>
+        <div id="lap-counter">Varv: 0</div>
     </header>
-    <main id="game-container
+    <main id="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
