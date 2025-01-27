@@ -2,7 +2,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Storlek på spelplan och block
+// Spelplan och blockstorlek
 canvas.width = 400;
 canvas.height = 400;
 const boxSize = 20;
@@ -131,5 +131,5 @@ function resetGame() {
   gameRunning = true;
 }
 
-// Starta spelloopen
-setInterval(gameLoop, 100);
+// Starta spelloopen med längre intervall (150ms för sänkt hastighet)
+setInterval(gameLoop, 150);
