@@ -20,14 +20,20 @@ canvas {
   background-color: black;
 }
 
-/* Sektionen för poäng eller fråga */
+/* Sektion för poäng och frågor */
 #infoSection {
   margin-top: 20px;
   text-align: center;
-  color: white;
 }
 
-#infoText {
+#scoreText {
   font-size: 20px;
   font-weight: bold;
+}
+
+#questionText {
+  font-size: 18px;
+  font-style: italic;
+  margin-top: 10px;
+  display: none;
 }
