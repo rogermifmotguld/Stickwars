@@ -18,7 +18,7 @@ body {
 /* Bana och bil */
 #track {
   width: 100%;
-  height: 80vh; /* Anpassar höjden för mobil */
+  height: 80vh; /* Gör banan synlig */
   background-color: #ccc;
   border: 5px solid #333;
   position: relative;
@@ -26,10 +26,10 @@ body {
 }
 
 #car {
-  width: 10%; /* Anpassar bilens storlek för responsivitet */
-  height: auto;
+  width: 10%; /* Anpassa bilens storlek */
+  height: 10%; /* Gör bilen proportionell */
   position: absolute;
-  bottom: 10%; /* Startar vid botten av banan */
+  bottom: 10%; /* Startposition längst ner */
   left: 50%;
   transform: translateX(-50%);
   background-color: red;
@@ -66,18 +66,18 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Anpassning för mobil och mindre skärmar */
+/* Anpassning för mobil */
 @media (max-width: 768px) {
   #car {
-    width: 15%; /* Gör bilen lite större på små skärmar */
+    width: 15%; /* Gör bilen större på mobil */
   }
 
   button {
-    font-size: 14px; /* Gör knapparna lite mindre */
+    font-size: 14px;
     padding: 8px 16px;
   }
 
   #game-container {
-    width: 90%; /* Anpassar bredden för mindre skärmar */
+    width: 90%;
   }
 }
