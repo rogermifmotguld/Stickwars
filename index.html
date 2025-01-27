@@ -9,6 +9,17 @@
 <body>
   <h1>Snake Game</h1>
   <canvas id="gameCanvas"></canvas>
+
+  <!-- Frågemodalen -->
+  <div id="questionModal" class="hidden">
+    <div id="questionBox">
+      <p id="questionText"></p>
+      <button class="answerButton" onclick="checkAnswer(1)">1</button>
+      <button class="answerButton" onclick="checkAnswer(2)">2</button>
+      <button class="answerButton" onclick="checkAnswer(3)">3</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
