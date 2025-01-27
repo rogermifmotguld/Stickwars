@@ -15,6 +15,9 @@ let food = generateFood();
 let score = 0;
 let gameRunning = true;
 
+// Kontroll för fråga
+let questionDisplayed = false; // Säkerställer att frågan bara visas en gång
+
 // Frågesektion
 const questionText = document.getElementById('questionText');
 const answersContainer = document.getElementById('answersContainer');
@@ -61,7 +64,12 @@ function update() {
   if (head.x === food.x && head.y === food.y) {
     score++;
     food = generateFood();
-    generateQuestion(); // Generera ny fråga
+
+    // Kontrollera om spelaren har ätit fem bitar
+    if (score === 5 && !questionDisplayed) {
+      generateQuestion(); // Visa fråga
+      questionDisplayed = true; // Förhindra att samma fråga visas flera gånger
+    }
   } else {
     // Ta bort svansen om ormen inte äter
     snake.pop();
@@ -82,4 +90,4 @@ function draw() {
 
   // Rita maten
   ctx.fillStyle = 'red';
-  ctx.fillRect(food.x, food
+  ctx.fillRect(food.x, food.y, boxSize,
