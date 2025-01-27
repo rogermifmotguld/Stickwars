@@ -8,15 +8,17 @@
 </head>
 <body>
   <h1>Snake Game</h1>
-  <canvas id="gameCanvas"></canvas>
+  
+  <!-- Spelytan -->
+  <div id="gameContainer">
+    <canvas id="gameCanvas"></canvas>
+  </div>
 
-  <!-- Frågemodalen -->
-  <div id="questionModal" class="hidden">
-    <div id="questionBox">
-      <p id="questionText"></p>
-      <button class="answerButton" onclick="checkAnswer(1)">1</button>
-      <button class="answerButton" onclick="checkAnswer(2)">2</button>
-      <button class="answerButton" onclick="checkAnswer(3)">3</button>
+  <!-- Frågesektion -->
+  <div id="questionSection">
+    <p id="questionText">Poäng: 0</p>
+    <div id="answersContainer">
+      <!-- Dynamiskt skapade svarsknappar placeras här -->
     </div>
   </div>
 
