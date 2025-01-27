@@ -1,4 +1,4 @@
-/* Centrera spelet och gör det responsivt */
+/* Centrera spelet och styla canvas */
 body {
   display: flex;
   flex-direction: column;
