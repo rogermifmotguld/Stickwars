@@ -35,5 +35,5 @@ canvas {
   font-size: 18px;
   font-style: italic;
   margin-top: 10px;
-  display: none;
+  display: none; /* Dölj frågan tills den ska visas */
 }
