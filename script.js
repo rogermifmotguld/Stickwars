@@ -15,9 +15,8 @@ let food = generateFood(); // Generera mat
 let score = 0; // Startpoäng
 let gameRunning = true; // Kontroll för spelstatus
 
-// Referenser till poäng och frågetext
+// Referens till poängtext
 const scoreText = document.getElementById('scoreText');
-const questionText = document.getElementById('questionText');
 
 // Spelloopen
 function gameLoop() {
@@ -61,14 +60,7 @@ function update() {
   if (head.x === food.x && head.y === food.y) {
     score++;
     food = generateFood(); // Generera ny mat
-
-    // Uppdatera poängen
-    updateScore();
-
-    // Visa frågan när poängen är 5
-    if (score === 5) {
-      showQuestion();
-    }
+    updateScore(); // Uppdatera poängen
   } else {
     // Ta bort svansen om ormen inte äter
     snake.pop();
@@ -113,11 +105,6 @@ function updateScore() {
   scoreText.textContent = `Poäng: ${score}`;
 }
 
-// Visa frågan
-function showQuestion() {
-  questionText.style.display = 'block'; // Gör frågan synlig
-}
-
 // Hantera tangenttryckningar
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowUp' && direction.y === 0) {
@@ -147,7 +134,6 @@ function resetGame() {
   food = generateFood();
   gameRunning = true;
   updateScore(); // Återställ poängtexten
-  questionText.style.display = 'none'; // Dölj frågan
 }
 
 // Starta spelloopen
