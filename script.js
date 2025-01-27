@@ -7,6 +7,7 @@ const nextLevelContainer = document.getElementById("next-level");
 const nextBtn = document.getElementById("next-btn");
 const gameOverContainer = document.getElementById("game-over");
 const retryBtn = document.getElementById("retry-btn");
+const track = document.getElementById("track");
 
 // Frågor och svar
 const questions = [
@@ -32,22 +33,74 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
+let carPositionX = 50; // Bilens horisontella position i procent
+let carPositionY = 90; // Bilens vertikala position i procent
 
-// Rörelse för bilen
+// Rörelse för bilen – tangentbord
 document.addEventListener("keydown", (e) => {
-  const carPosition = car.offsetLeft;
-  if (e.key === "ArrowRight" && carPosition < 360) {
-    car.style.left = carPosition + 20 + "px";
+  if (e.key === "ArrowRight" && carPositionX < 90) {
+    carPositionX += 5;
   }
-  if (e.key === "ArrowLeft" && carPosition > 0) {
-    car.style.left = carPosition - 20 + "px";
+  if (e.key === "ArrowLeft" && carPositionX > 0) {
+    carPositionX -= 5;
   }
+  if (e.key === "ArrowUp" && carPositionY > 0) {
+    carPositionY -= 5;
+  }
+  if (e.key === "ArrowDown" && carPositionY < 90) {
+    carPositionY += 5;
+  }
+  updateCarPosition();
 
-  // Målgång (framme vid toppen av banan)
-  if (car.offsetTop <= 10) {
+  // Kontrollera om bilen är vid målgång (överst på banan)
+  if (carPositionY <= 0) {
     showQuestion();
   }
 });
+
+// Rörelse för bilen – touch screen
+let touchStartX = 0;
+let touchStartY = 0;
+
+track.addEventListener("touchstart", (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+});
+
+track.addEventListener("touchmove", (e) => {
+  const touchMoveX = e.touches[0].clientX;
+  const touchMoveY = e.touches[0].clientY;
+
+  // Beräkna rörelseriktning
+  if (touchMoveX > touchStartX + 20 && carPositionX < 90) {
+    carPositionX += 5;
+  }
+  if (touchMoveX < touchStartX - 20 && carPositionX > 0) {
+    carPositionX -= 5;
+  }
+  if (touchMoveY < touchStartY - 20 && carPositionY > 0) {
+    carPositionY -= 5;
+  }
+  if (touchMoveY > touchStartY + 20 && carPositionY < 90) {
+    carPositionY += 5;
+  }
+
+  touchStartX = touchMoveX;
+  touchStartY = touchMoveY;
+
+  updateCarPosition();
+
+  // Kontrollera om bilen är vid målgång (överst på banan)
+  if (carPositionY <= 0) {
+    showQuestion();
+  }
+});
+
+// Uppdatera bilens position
+function updateCarPosition() {
+  car.style.left = carPositionX + "%";
+  car.style.top = carPositionY + "%";
+}
 
 // Visa frågan
 function showQuestion() {
@@ -96,8 +149,9 @@ retryBtn.addEventListener("click", () => {
 
 // Återställ spelet
 function resetGame() {
-  car.style.top = "250px";
-  car.style.left = "50%";
+  carPositionX = 50;
+  carPositionY = 90;
+  updateCarPosition();
   nextLevelContainer.classList.add("hidden");
   gameOverContainer.classList.add("hidden");
 }
