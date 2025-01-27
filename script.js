@@ -15,6 +15,15 @@ let food = generateFood(); // Första matpositionen
 let score = 0;
 let gameRunning = true; // För att hantera spelstatus
 
+// Lista med historiska frågor och svar
+const historyQuestions = [
+  { question: "När började andra världskriget?", answer: "1939" },
+  { question: "Vem var den första presidenten i USA?", answer: "George Washington" },
+  { question: "Vad hette den egyptiska drottningen som regerade med Caesar och Antonius?", answer: "Kleopatra" },
+  { question: "Vilket år föll Romarriket?", answer: "476" },
+  { question: "Vem skrev 'Om revolutionernas himmelska sfärer'?", answer: "Kopernikus" }
+];
+
 // Spelloopen
 function gameLoop() {
   if (gameRunning) {
@@ -57,6 +66,11 @@ function update() {
   if (head.x === food.x && head.y === food.y) {
     score++;
     food = generateFood(); // Generera ny mat
+
+    // Visa en fråga var femte matbit
+    if (score % 5 === 0) {
+      askHistoryQuestion();
+    }
   } else {
     // Ta bort svansen om ormen inte äter
     snake.pop();
@@ -114,6 +128,29 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+// Visa en historisk fråga
+function askHistoryQuestion() {
+  // Pausa spelet
+  gameRunning = false;
+
+  // Hämta en slumpmässig fråga
+  const randomIndex = Math.floor(Math.random() * historyQuestions.length);
+  const question = historyQuestions[randomIndex];
+
+  // Visa en fråga och få användarens svar
+  const userAnswer = prompt(question.question);
+
+  // Kontrollera om svaret är rätt eller fel
+  if (userAnswer && userAnswer.toLowerCase() === question.answer.toLowerCase()) {
+    alert("Rätt svar! Bra jobbat!");
+  } else {
+    alert(`Fel svar. Rätt svar var: ${question.answer}`);
+  }
+
+  // Fortsätt spelet
+  gameRunning = true;
+}
+
 // Slut på spelet
 function endGame() {
   gameRunning = false;
@@ -131,5 +168,5 @@ function resetGame() {
   gameRunning = true;
 }
 
-// Starta spelloopen med längre intervall (150ms för sänkt hastighet)
+// Starta spelloopen
 setInterval(gameLoop, 150);
