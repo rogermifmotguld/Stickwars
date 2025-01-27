@@ -1,3 +1,4 @@
+/* Centrera spelet och gör det responsivt */
 body {
   display: flex;
   flex-direction: column;
