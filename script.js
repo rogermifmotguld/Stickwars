@@ -2,7 +2,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Storlek på spelplan och block
+// Spelplan och blockstorlek
 canvas.width = 400;
 canvas.height = 400;
 const boxSize = 20;
@@ -10,44 +10,42 @@ const boxSize = 20;
 // Ormens inställningar
 let snake = [{ x: 200, y: 200 }]; // Startposition för ormen
 let direction = { x: 0, y: 0 }; // Ingen rörelse i början
-let nextDirection = { x: 0, y: 0 }; // Riktning väntar på tangenttryck
-let food = generateFood(); // Generera första matpositionen
+let nextDirection = { x: 0, y: 0 }; // För att undvika direktkollisioner
+let food = generateFood(); // Första matposition
 let score = 0;
-let isGameOver = false;
+let gameRunning = true; // För att hantera spelstatus
 
 // Spelloopen
 function gameLoop() {
-  if (!isGameOver) {
+  if (gameRunning) {
     update();
     draw();
   }
 }
 
-// Uppdatera spelstatus
+// Uppdatera spelets logik
 function update() {
-  // Uppdatera riktning baserat på senaste input
-  if (nextDirection.x !== 0 || nextDirection.y !== 0) {
-    direction = nextDirection;
-  }
-
-  // Om ormen inte rör sig, vänta på tangenttryck
-  if (direction.x === 0 && direction.y === 0) {
+  // Vänta på första tangenttryckning
+  if (nextDirection.x === 0 && nextDirection.y === 0) {
     return;
   }
 
-  // Beräkna huvudets nya position
+  // Uppdatera riktning
+  direction = nextDirection;
+
+  // Beräkna ny huvudposition
   const head = { x: snake[0].x + direction.x * boxSize, y: snake[0].y + direction.y * boxSize };
 
   // Kontrollera kollision med väggar
   if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-    gameOver();
+    endGame();
     return;
   }
 
   // Kontrollera kollision med sig själv
   for (let segment of snake) {
     if (head.x === segment.x && head.y === segment.y) {
-      gameOver();
+      endGame();
       return;
     }
   }
@@ -87,16 +85,16 @@ function draw() {
   ctx.fillText(`Score: ${score}`, 10, 20);
 }
 
-// Generera mat på en slumpmässig plats
+// Generera mat på slumpmässig position
 function generateFood() {
   let foodX, foodY;
   let isOnSnake;
 
-  // Generera mat tills den inte hamnar på ormen
   do {
     foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
     foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
 
+    // Kontrollera om maten landar på ormen
     isOnSnake = snake.some(segment => segment.x === foodX && segment.y === foodY);
   } while (isOnSnake);
 
@@ -116,9 +114,9 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-// Om spelet tar slut
-function gameOver() {
-  isGameOver = true;
+// Slut på spelet
+function endGame() {
+  gameRunning = false;
   alert(`Game Over! Your score: ${score}`);
   resetGame();
 }
@@ -130,8 +128,8 @@ function resetGame() {
   nextDirection = { x: 0, y: 0 };
   score = 0;
   food = generateFood();
-  isGameOver = false;
+  gameRunning = true;
 }
 
-// Starta spelet
+// Starta spelloopen
 setInterval(gameLoop, 100);
