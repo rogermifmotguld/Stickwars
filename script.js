@@ -8,14 +8,14 @@ canvas.height = 400;
 const boxSize = 20;
 
 // Ormens inställningar
-let snake = [{ x: 200, y: 200 }];
-let direction = { x: 0, y: 0 };
-let nextDirection = { x: 0, y: 0 };
-let food = generateFood();
-let score = 0;
-let gameRunning = true;
+let snake = [{ x: 200, y: 200 }]; // Startposition för ormen
+let direction = { x: 0, y: 0 }; // Startens riktning
+let nextDirection = { x: 0, y: 0 }; // Nästa riktning
+let food = generateFood(); // Generera mat
+let score = 0; // Startpoäng
+let gameRunning = true; // Kontroll för spelstatus
 
-// Referenser till poäng och fråga
+// Referenser till poäng och frågetext
 const scoreText = document.getElementById('scoreText');
 const questionText = document.getElementById('questionText');
 
@@ -60,7 +60,7 @@ function update() {
   // Kontrollera om ormen äter maten
   if (head.x === food.x && head.y === food.y) {
     score++;
-    food = generateFood();
+    food = generateFood(); // Generera ny mat
 
     // Uppdatera poängen
     updateScore();
