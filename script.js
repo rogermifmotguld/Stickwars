@@ -1,6 +1,6 @@
 // Canvas-inställningar
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
 // Spelplan och blockstorlek
 canvas.width = 400;
@@ -14,14 +14,33 @@ let nextDirection = { x: 0, y: 0 }; // För att hantera riktning säkert
 let food = generateFood(); // Första matpositionen
 let score = 0;
 let gameRunning = true; // För att hantera spelstatus
+let doublePoints = false; // Om rätt svar ges, fördubblas poängen
+
+// Frågemodalen
+const questionModal = document.getElementById("questionModal");
+const questionText = document.getElementById("questionText");
 
 // Lista med historiska frågor och svar
 const historyQuestions = [
-  { question: "När började andra världskriget?", answer: "1939" },
-  { question: "Vem var den första presidenten i USA?", answer: "George Washington" },
-  { question: "Vad hette den egyptiska drottningen som regerade med Caesar och Antonius?", answer: "Kleopatra" },
-  { question: "Vilket år föll Romarriket?", answer: "476" },
-  { question: "Vem skrev 'Om revolutionernas himmelska sfärer'?", answer: "Kopernikus" }
+  {
+    question: "Vad menas med förnuft och hur kopplas det till upplysningen?",
+    options: [
+      "Logiskt tänkande och rationell analys.",
+      "Att följa traditioner och religiösa dogmer.",
+      "Att förlita sig på känslor och intuition.",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    question: "När började andra världskriget?",
+    options: ["1939", "1945", "1914"],
+    correctAnswer: 1,
+  },
+  {
+    question: "Vem var den första presidenten i USA?",
+    options: ["Abraham Lincoln", "George Washington", "Thomas Jefferson"],
+    correctAnswer: 2,
+  },
 ];
 
 // Spelloopen
@@ -64,7 +83,7 @@ function update() {
 
   // Kontrollera om ormen äter maten
   if (head.x === food.x && head.y === food.y) {
-    score++;
+    score += doublePoints ? 2 : 1; // Dubbel poäng om rätt svar ges
     food = generateFood(); // Generera ny mat
 
     // Visa en fråga var femte matbit
@@ -80,22 +99,22 @@ function update() {
 // Rita spelet
 function draw() {
   // Rensa canvas
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Rita ormen
-  ctx.fillStyle = 'lime';
+  ctx.fillStyle = "lime";
   for (let segment of snake) {
     ctx.fillRect(segment.x, segment.y, boxSize, boxSize);
   }
 
   // Rita maten
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = "red";
   ctx.fillRect(food.x, food.y, boxSize, boxSize);
 
   // Rita poäng
-  ctx.fillStyle = 'white';
-  ctx.font = '20px Arial';
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
   ctx.fillText(`Score: ${score}`, 10, 20);
 }
 
@@ -115,19 +134,6 @@ function generateFood() {
   return { x: foodX, y: foodY };
 }
 
-// Hantera tangenttryckningar för att styra ormen
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowUp' && direction.y === 0) {
-    nextDirection = { x: 0, y: -1 };
-  } else if (event.key === 'ArrowDown' && direction.y === 0) {
-    nextDirection = { x: 0, y: 1 };
-  } else if (event.key === 'ArrowLeft' && direction.x === 0) {
-    nextDirection = { x: -1, y: 0 };
-  } else if (event.key === 'ArrowRight' && direction.x === 0) {
-    nextDirection = { x: 1, y: 0 };
-  }
-});
-
 // Visa en historisk fråga
 function askHistoryQuestion() {
   // Pausa spelet
@@ -137,36 +143,11 @@ function askHistoryQuestion() {
   const randomIndex = Math.floor(Math.random() * historyQuestions.length);
   const question = historyQuestions[randomIndex];
 
-  // Visa en fråga och få användarens svar
-  const userAnswer = prompt(question.question);
+  // Visa frågetext och svarsalternativ
+  questionText.innerHTML = `${question.question}<br><br>
+    1. ${question.options[0]}<br>
+    2. ${question.options[1]}<br>
+    3. ${question.options[2]}`;
+  questionModal.classList.remove("hidden");
 
-  // Kontrollera om svaret är rätt eller fel
-  if (userAnswer && userAnswer.toLowerCase() === question.answer.toLowerCase()) {
-    alert("Rätt svar! Bra jobbat!");
-  } else {
-    alert(`Fel svar. Rätt svar var: ${question.answer}`);
-  }
-
-  // Fortsätt spelet
-  gameRunning = true;
-}
-
-// Slut på spelet
-function endGame() {
-  gameRunning = false;
-  alert(`Game Over! Your score: ${score}`);
-  resetGame();
-}
-
-// Återställ spelet
-function resetGame() {
-  snake = [{ x: 200, y: 200 }];
-  direction = { x: 0, y: 0 };
-  nextDirection = { x: 0, y: 0 };
-  score = 0;
-  food = generateFood();
-  gameRunning = true;
-}
-
-// Starta spelloopen
-setInterval(gameLoop, 150);
+  // Spara korr
