@@ -18,7 +18,7 @@ let gameRunning = true;
 // Kontroll för fråga
 let questionDisplayed = false; // Säkerställer att frågan bara visas en gång
 
-// Frågesektion
+// Frågesektion (denna visas under poängraden)
 const questionText = document.getElementById('questionText');
 const answersContainer = document.getElementById('answersContainer');
 
@@ -67,7 +67,7 @@ function update() {
 
     // Kontrollera om spelaren har ätit fem bitar
     if (score === 5 && !questionDisplayed) {
-      generateQuestion(); // Visa fråga
+      displayQuestion(); // Visa frågan
       questionDisplayed = true; // Förhindra att samma fråga visas flera gånger
     }
   } else {
@@ -90,4 +90,37 @@ function draw() {
 
   // Rita maten
   ctx.fillStyle = 'red';
-  ctx.fillRect(food.x, food.y, boxSize,
+  ctx.fillRect(food.x, food.y, boxSize, boxSize);
+
+  // Rita poäng
+  ctx.fillStyle = 'white';
+  ctx.font = '20px Arial';
+  ctx.fillText(`Score: ${score}`, 10, 20);
+
+  // Om frågan är aktiv, se till att den visas i frågesektionen
+  if (questionDisplayed) {
+    questionText.style.display = 'block'; // Gör frågan synlig
+  }
+}
+
+// Generera mat på slumpmässig plats
+function generateFood() {
+  let foodX, foodY;
+  let isOnSnake;
+
+  do {
+    foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
+    foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
+
+    // Kontrollera om maten hamnar på ormen
+    isOnSnake = snake.some(segment => segment.x === foodX && segment.y === foodY);
+  } while (isOnSnake);
+
+  return { x: foodX, y: foodY };
+}
+
+// Hantera tangenttryckningar
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowUp' && direction.y === 0) {
+    nextDirection = { x: 0, y: -1 };
+  } else if (event.key === 'ArrowDown' &&
