@@ -1,38 +1,37 @@
+// Canvas och kontext
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Spelkonfiguration
-const tileSize = 20; // Storlek på varje "block" på spelplanen
+// Konfiguration av spelplanen
+const tileSize = 20; // Storlek på varje ruta (20x20 pixlar)
 const rows = canvas.height / tileSize; // Antal rader
 const cols = canvas.width / tileSize; // Antal kolumner
 
-// Ormens data
-let snake = [{ x: 10, y: 10 }]; // Ormen startar i mitten av spelplanen
+// Ormens och matens data
+let snake = [{ x: 10, y: 10 }]; // Startposition för ormen
 let direction = { x: 0, y: 0 }; // Start: stillastående
-let food = spawnFood(); // Placera första maten
-let gameSpeed = 200; // Hur snabbt spelet går (lägre värde = snabbare)
-let gameInterval;
+let food = spawnFood(); // Placera ut första maten
+
+// Spelets hastighet (ms mellan uppdateringar)
+const gameSpeed = 150;
 
 // Starta spelet
-function startGame() {
-  gameInterval = setInterval(updateGame, gameSpeed);
-}
+let gameLoop = setInterval(updateGame, gameSpeed);
 
-// Uppdatera spelet
 function updateGame() {
-  // Flytta ormen i aktuell riktning
+  // Flytta ormen
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
-  // Kontrollera kollision med väggarna
+  // Kontrollera om ormen kolliderar med väggar
   if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
-    gameOver();
+    endGame();
     return;
   }
 
-  // Kontrollera kollision med sig själv
+  // Kontrollera om ormen kolliderar med sig själv
   for (let segment of snake) {
-    if (head.x === segment.x && head.y === segment.y) {
-      gameOver();
+    if (segment.x === head.x && segment.y === head.y) {
+      endGame();
       return;
     }
   }
@@ -42,16 +41,16 @@ function updateGame() {
 
   // Kontrollera om ormen äter maten
   if (head.x === food.x && head.y === food.y) {
-    food = spawnFood(); // Placera ny mat
+    food = spawnFood(); // Generera ny mat
   } else {
     snake.pop(); // Om ingen mat äts, ta bort sista segmentet
   }
 
-  // Rita spelet
+  // Rita spelplanen
   drawGame();
 }
 
-// Rita spelet
+// Rita hela spelet
 function drawGame() {
   // Rensa canvas
   ctx.fillStyle = "black";
@@ -68,7 +67,7 @@ function drawGame() {
   }
 }
 
-// Placera maten på en slumpmässig plats
+// Generera mat på en slumpmässig plats
 function spawnFood() {
   return {
     x: Math.floor(Math.random() * cols),
@@ -76,13 +75,13 @@ function spawnFood() {
   };
 }
 
-// Game Over
-function gameOver() {
-  clearInterval(gameInterval);
-  alert("Game Over! Tryck F5 för att spela igen.");
+// Hantera Game Over
+function endGame() {
+  clearInterval(gameLoop); // Stoppa spelet
+  alert("Game Over! Tryck F5 för att spela igen."); // Visa meddelande
 }
 
-// Styrning av ormen
+// Hantera tangenttryckningar för ormens rörelser
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowUp" && direction.y === 0) {
     direction = { x: 0, y: -1 };
@@ -94,6 +93,3 @@ document.addEventListener("keydown", (e) => {
     direction = { x: 1, y: 0 };
   }
 });
-
-// Starta spelet
-startGame();
