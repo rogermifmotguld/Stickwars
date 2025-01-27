@@ -1,104 +1,103 @@
-// Hämtar element från DOM
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-const timeDisplay = document.getElementById("time-display");
-const lapCounterDisplay = document.getElementById("lap-counter");
+// Elementreferenser
+const car = document.getElementById("car");
+const questionContainer = document.getElementById("question-container");
+const questionText = document.getElementById("question-text");
+const answersContainer = document.getElementById("answers");
+const nextLevelContainer = document.getElementById("next-level");
+const nextBtn = document.getElementById("next-btn");
+const gameOverContainer = document.getElementById("game-over");
+const retryBtn = document.getElementById("retry-btn");
 
-// Variabler för tid och varv
-let elapsedTime = 0; // Total tid i sekunder
-let lapCount = 0;    // Antal varv
+// Frågor och svar
+const questions = [
+  {
+    question: "Vad menas med förnuft och hur kopplas det till upplysningen?",
+    options: ["Logik och frihet", "Känslor och religion", "Tradition och auktoritet"],
+    answer: 0,
+  },
+  {
+    question: "Vad innebär begreppet samhällskontrakt?",
+    options: [
+      "Ett avtal mellan individer och staten",
+      "En lag om handel",
+      "En överenskommelse mellan två länder",
+    ],
+    answer: 0,
+  },
+  {
+    question: "Vem förespråkade maktfördelning?",
+    options: ["Montesquieu", "Rousseau", "Voltaire"],
+    answer: 0,
+  },
+];
 
-// Variabler för bilens position
-const car = {
-    x: 400, // Startposition (centrum av banan)
-    y: 220,
-    width: 20,
-    height: 10,
-    angle: 0, // För att bilen ska kunna röra sig i en cirkel
-    speed: 2,
-    color: "red"
-};
+let currentQuestionIndex = 0;
 
-// Mållinje
-const finishLine = {
-    x: 390,
-    y: 200,
-    width: 40,
-    height: 5,
-    color: "green"
-};
+// Rörelse för bilen
+document.addEventListener("keydown", (e) => {
+  const carPosition = car.offsetLeft;
+  if (e.key === "ArrowRight" && carPosition < 360) {
+    car.style.left = carPosition + 20 + "px";
+  }
+  if (e.key === "ArrowLeft" && carPosition > 0) {
+    car.style.left = carPosition - 20 + "px";
+  }
 
-// Tidshantering
-let lastTime = performance.now();
+  // Målgång (framme vid toppen av banan)
+  if (car.offsetTop <= 10) {
+    showQuestion();
+  }
+});
 
-// Funktion för att uppdatera tiden
-function updateTime(deltaTime) {
-    elapsedTime += deltaTime / 1000; // Uppdatera tiden i sekunder
-    timeDisplay.textContent = `Tid: ${elapsedTime.toFixed(2)} s`;
+// Visa frågan
+function showQuestion() {
+  questionContainer.classList.remove("hidden");
+  questionText.textContent = questions[currentQuestionIndex].question;
+
+  // Rensa tidigare svarsalternativ
+  answersContainer.innerHTML = "";
+
+  // Skapa nya svarsalternativ
+  questions[currentQuestionIndex].options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.addEventListener("click", () => checkAnswer(index));
+    answersContainer.appendChild(button);
+  });
 }
 
-// Funktion för att rita banan
-function drawTrack() {
-    ctx.fillStyle = "white";
-
-    // Rita oval bana
-    ctx.beginPath();
-    ctx.ellipse(400, 300, 300, 200, 0, 0, 2 * Math.PI); // Oval i mitten av canvas
-    ctx.fill();
-
-    // Rita innerbanans "hål"
-    ctx.fillStyle = "#222"; // Samma färg som bakgrunden
-    ctx.beginPath();
-    ctx.ellipse(400, 300, 250, 150, 0, 0, 2 * Math.PI);
-    ctx.fill();
-
-    // Rita mållinjen
-    ctx.fillStyle = finishLine.color;
-    ctx.fillRect(finishLine.x, finishLine.y, finishLine.width, finishLine.height);
+// Kontrollera svar
+function checkAnswer(selectedIndex) {
+  if (selectedIndex === questions[currentQuestionIndex].answer) {
+    // Rätt svar
+    questionContainer.classList.add("hidden");
+    nextLevelContainer.classList.remove("hidden");
+  } else {
+    // Fel svar
+    questionContainer.classList.add("hidden");
+    gameOverContainer.classList.remove("hidden");
+  }
 }
 
-// Funktion för att rita bilen
-function drawCar() {
-    ctx.save();
-    ctx.translate(car.x, car.y); // Flytta till bilens position
-    ctx.rotate(car.angle); // Rotera bilen
-    ctx.fillStyle = car.color;
-    ctx.fillRect(-car.width / 2, -car.height / 2, car.width, car.height);
-    ctx.restore();
+// Nästa bana
+nextBtn.addEventListener("click", () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    resetGame();
+  } else {
+    alert("Grattis! Du har klarat alla banor!");
+  }
+});
+
+// Försök igen
+retryBtn.addEventListener("click", () => {
+  resetGame();
+});
+
+// Återställ spelet
+function resetGame() {
+  car.style.top = "250px";
+  car.style.left = "50%";
+  nextLevelContainer.classList.add("hidden");
+  gameOverContainer.classList.add("hidden");
 }
-
-// Funktion för att uppdatera spelet
-function updateGame(deltaTime) {
-    // Flytta bilen runt banan
-    car.angle += (car.speed / 200); // Ändra vinkeln för cirkulär rörelse
-    car.x = 400 + Math.cos(car.angle) * 270; // Bilens x-position
-    car.y = 300 + Math.sin(car.angle) * 180; // Bilens y-position
-
-    // Kontrollera om bilen passerar mållinjen (startpunkten)
-    if (
-        car.angle >= 2 * Math.PI // Ett komplett varv (360 grader)
-    ) {
-        car.angle = 0; // Nollställ vinkeln för nästa varv
-        lapCount++; // Öka varvräknaren
-        lapCounterDisplay.textContent = `Varv: ${lapCount}`;
-    }
-
-    // Rita allt på canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvas
-    drawTrack(); // Rita banan
-    drawCar(); // Rita bilen
-}
-
-// Spel-loop
-function gameLoop(timestamp) {
-    const deltaTime = timestamp - lastTime; // Tid mellan uppdateringar
-    lastTime = timestamp;
-
-    updateTime(deltaTime); // Uppdatera tiden
-    updateGame(deltaTime); // Uppdatera spelet
-
-    requestAnimationFrame(gameLoop); // Nästa uppdatering
-}
-
-// Starta spelet
-requestAnimationFrame(gameLoop);
