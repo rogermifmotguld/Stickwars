@@ -1,157 +1,75 @@
 // Elementreferenser
 const car = document.getElementById("car");
-const questionContainer = document.getElementById("question-container");
-const questionText = document.getElementById("question-text");
-const answersContainer = document.getElementById("answers");
-const nextLevelContainer = document.getElementById("next-level");
-const nextBtn = document.getElementById("next-btn");
+const track = document.getElementById("track");
 const gameOverContainer = document.getElementById("game-over");
 const retryBtn = document.getElementById("retry-btn");
-const track = document.getElementById("track");
 
-// Frågor och svar
-const questions = [
-  {
-    question: "Vad menas med förnuft och hur kopplas det till upplysningen?",
-    options: ["Logik och frihet", "Känslor och religion", "Tradition och auktoritet"],
-    answer: 0,
-  },
-  {
-    question: "Vad innebär begreppet samhällskontrakt?",
-    options: [
-      "Ett avtal mellan individer och staten",
-      "En lag om handel",
-      "En överenskommelse mellan två länder",
-    ],
-    answer: 0,
-  },
-  {
-    question: "Vem förespråkade maktfördelning?",
-    options: ["Montesquieu", "Rousseau", "Voltaire"],
-    answer: 0,
-  },
-];
+// Bilens position
+let carPositionX = 135; // Startposition X
+let carPositionY = 135; // Startposition Y
+const carSize = 30; // Bilens storlek (bredd och höjd)
 
-let currentQuestionIndex = 0;
-let carPositionX = 50; // Bilens horisontella position i procent
-let carPositionY = 90; // Bilens vertikala position i procent
+// Banans dimensioner
+const trackWidth = 300;
+const trackHeight = 300;
+const trackBorderWidth = 5; // Svarta kantens bredd
+
+// Rörelsehastighet
+const moveSpeed = 5; // Hur mycket bilen rör sig per knapptryck
 
 // Rörelse för bilen – tangentbord
 document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight" && carPositionX < 90) {
-    carPositionX += 5;
+  if (e.key === "ArrowRight") {
+    carPositionX += moveSpeed;
+  } else if (e.key === "ArrowLeft") {
+    carPositionX -= moveSpeed;
+  } else if (e.key === "ArrowUp") {
+    carPositionY -= moveSpeed;
+  } else if (e.key === "ArrowDown") {
+    carPositionY += moveSpeed;
   }
-  if (e.key === "ArrowLeft" && carPositionX > 0) {
-    carPositionX -= 5;
-  }
-  if (e.key === "ArrowUp" && carPositionY > 0) {
-    carPositionY -= 5;
-  }
-  if (e.key === "ArrowDown" && carPositionY < 90) {
-    carPositionY += 5;
-  }
+
+  // Uppdatera bilens position
   updateCarPosition();
 
-  // Kontrollera om bilen är vid målgång (överst på banan)
-  if (carPositionY <= 0) {
-    showQuestion();
-  }
-});
-
-// Rörelse för bilen – touch screen
-let touchStartX = 0;
-let touchStartY = 0;
-
-track.addEventListener("touchstart", (e) => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-});
-
-track.addEventListener("touchmove", (e) => {
-  const touchMoveX = e.touches[0].clientX;
-  const touchMoveY = e.touches[0].clientY;
-
-  // Beräkna rörelseriktning
-  if (touchMoveX > touchStartX + 20 && carPositionX < 90) {
-    carPositionX += 5;
-  }
-  if (touchMoveX < touchStartX - 20 && carPositionX > 0) {
-    carPositionX -= 5;
-  }
-  if (touchMoveY < touchStartY - 20 && carPositionY > 0) {
-    carPositionY -= 5;
-  }
-  if (touchMoveY > touchStartY + 20 && carPositionY < 90) {
-    carPositionY += 5;
-  }
-
-  touchStartX = touchMoveX;
-  touchStartY = touchMoveY;
-
-  updateCarPosition();
-
-  // Kontrollera om bilen är vid målgång (överst på banan)
-  if (carPositionY <= 0) {
-    showQuestion();
-  }
+  // Kontrollera om bilen nuddar kanten
+  checkCollision();
 });
 
 // Uppdatera bilens position
 function updateCarPosition() {
-  car.style.left = carPositionX + "%";
-  car.style.top = carPositionY + "%";
+  car.style.left = carPositionX + "px";
+  car.style.top = carPositionY + "px";
 }
 
-// Visa frågan
-function showQuestion() {
-  questionContainer.classList.remove("hidden");
-  questionText.textContent = questions[currentQuestionIndex].question;
-
-  // Rensa tidigare svarsalternativ
-  answersContainer.innerHTML = "";
-
-  // Skapa nya svarsalternativ
-  questions[currentQuestionIndex].options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.addEventListener("click", () => checkAnswer(index));
-    answersContainer.appendChild(button);
-  });
-}
-
-// Kontrollera svar
-function checkAnswer(selectedIndex) {
-  if (selectedIndex === questions[currentQuestionIndex].answer) {
-    // Rätt svar
-    questionContainer.classList.add("hidden");
-    nextLevelContainer.classList.remove("hidden");
-  } else {
-    // Fel svar
-    questionContainer.classList.add("hidden");
-    gameOverContainer.classList.remove("hidden");
+// Kontrollera om bilen nuddar kanten
+function checkCollision() {
+  // Kontrollera om bilen nuddar någon kant
+  if (
+    carPositionX < trackBorderWidth || // Vänster kant
+    carPositionX + carSize > trackWidth - trackBorderWidth || // Höger kant
+    carPositionY < trackBorderWidth || // Övre kant
+    carPositionY + carSize > trackHeight - trackBorderWidth // Nedre kant
+  ) {
+    gameOver();
   }
 }
 
-// Nästa bana
-nextBtn.addEventListener("click", () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    resetGame();
-  } else {
-    alert("Grattis! Du har klarat alla banor!");
-  }
-});
-
-// Försök igen
-retryBtn.addEventListener("click", () => {
-  resetGame();
-});
+// Visa "game over" och starta om
+function gameOver() {
+  // Göm bilen och visa "Game Over"-meddelande
+  car.style.display = "none";
+  gameOverContainer.classList.remove("hidden");
+}
 
 // Återställ spelet
-function resetGame() {
-  carPositionX = 50;
-  carPositionY = 90;
+retryBtn.addEventListener("click", () => {
+  // Återställ bilens position
+  carPositionX = 135;
+  carPositionY = 135;
   updateCarPosition();
-  nextLevelContainer.classList.add("hidden");
+
+  // Visa bilen och göm "Game Over"-meddelande
+  car.style.display = "block";
   gameOverContainer.classList.add("hidden");
-}
+});
