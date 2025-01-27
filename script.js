@@ -1,37 +1,40 @@
-// Canvas och kontext
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+// Canvas-inställningar
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-// Konfiguration av spelplanen
-const tileSize = 20; // Storlek på varje ruta (20x20 pixlar)
-const rows = canvas.height / tileSize; // Antal rader
-const cols = canvas.width / tileSize; // Antal kolumner
+canvas.width = 400;
+canvas.height = 400;
 
-// Ormens och matens data
-let snake = [{ x: 10, y: 10 }]; // Startposition för ormen
-let direction = { x: 0, y: 0 }; // Start: stillastående
-let food = spawnFood(); // Placera ut första maten
+// Storlek på spelbrädet
+const boxSize = 20;
 
-// Spelets hastighet (ms mellan uppdateringar)
-const gameSpeed = 150;
+// Ormens inställningar
+let snake = [{ x: 200, y: 200 }];
+let direction = { x: 0, y: 0 };
+let food = generateFood();
+let score = 0;
 
-// Starta spelet
-let gameLoop = setInterval(updateGame, gameSpeed);
+// Spelloopen
+function gameLoop() {
+  update();
+  draw();
+}
 
-function updateGame() {
+// Uppdatera spelets logik
+function update() {
   // Flytta ormen
-  const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+  const head = { x: snake[0].x + direction.x * boxSize, y: snake[0].y + direction.y * boxSize };
 
-  // Kontrollera om ormen kolliderar med väggar
-  if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
-    endGame();
+  // Kontrollera kollision med väggar
+  if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+    gameOver();
     return;
   }
 
-  // Kontrollera om ormen kolliderar med sig själv
+  // Kontrollera kollision med sig själv
   for (let segment of snake) {
-    if (segment.x === head.x && segment.y === head.y) {
-      endGame();
+    if (head.x === segment.x && head.y === segment.y) {
+      gameOver();
       return;
     }
   }
@@ -41,55 +44,69 @@ function updateGame() {
 
   // Kontrollera om ormen äter maten
   if (head.x === food.x && head.y === food.y) {
-    food = spawnFood(); // Generera ny mat
+    score++;
+    food = generateFood();
   } else {
-    snake.pop(); // Om ingen mat äts, ta bort sista segmentet
+    // Ta bort svansen om maten inte äts
+    snake.pop();
   }
-
-  // Rita spelplanen
-  drawGame();
 }
 
-// Rita hela spelet
-function drawGame() {
+// Rita spelet
+function draw() {
   // Rensa canvas
-  ctx.fillStyle = "black";
+  ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Rita maten
-  ctx.fillStyle = "red";
-  ctx.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
-
   // Rita ormen
-  ctx.fillStyle = "green";
+  ctx.fillStyle = 'lime';
   for (let segment of snake) {
-    ctx.fillRect(segment.x * tileSize, segment.y * tileSize, tileSize, tileSize);
+    ctx.fillRect(segment.x, segment.y, boxSize, boxSize);
   }
+
+  // Rita maten
+  ctx.fillStyle = 'red';
+  ctx.fillRect(food.x, food.y, boxSize, boxSize);
+
+  // Rita poäng
+  ctx.fillStyle = 'white';
+  ctx.font = '20px Arial';
+  ctx.fillText(`Score: ${score}`, 10, 20);
 }
 
-// Generera mat på en slumpmässig plats
-function spawnFood() {
-  return {
-    x: Math.floor(Math.random() * cols),
-    y: Math.floor(Math.random() * rows),
-  };
+// Generera mat på en slumpmässig position
+function generateFood() {
+  const foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
+  const foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
+  return { x: foodX, y: foodY };
 }
 
-// Hantera Game Over
-function endGame() {
-  clearInterval(gameLoop); // Stoppa spelet
-  alert("Game Over! Tryck F5 för att spela igen."); // Visa meddelande
-}
-
-// Hantera tangenttryckningar för ormens rörelser
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowUp" && direction.y === 0) {
-    direction = { x: 0, y: -1 };
-  } else if (e.key === "ArrowDown" && direction.y === 0) {
-    direction = { x: 0, y: 1 };
-  } else if (e.key === "ArrowLeft" && direction.x === 0) {
-    direction = { x: -1, y: 0 };
-  } else if (e.key === "ArrowRight" && direction.x === 0) {
-    direction = { x: 1, y: 0 };
+// Hantera tangenttryckningar
+document.addEventListener('keydown', (event) => {
+  switch (event.key) {
+    case 'ArrowUp':
+      if (direction.y === 0) direction = { x: 0, y: -1 };
+      break;
+    case 'ArrowDown':
+      if (direction.y === 0) direction = { x: 0, y: 1 };
+      break;
+    case 'ArrowLeft':
+      if (direction.x === 0) direction = { x: -1, y: 0 };
+      break;
+    case 'ArrowRight':
+      if (direction.x === 0) direction = { x: 1, y: 0 };
+      break;
   }
 });
+
+// Spela om vid kollision
+function gameOver() {
+  alert(`Game Over! Your score: ${score}`);
+  snake = [{ x: 200, y: 200 }];
+  direction = { x: 0, y: 0 };
+  score = 0;
+  food = generateFood();
+}
+
+// Starta spelet
+setInterval(gameLoop, 100);
