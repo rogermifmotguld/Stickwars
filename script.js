@@ -2,7 +2,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Spelplan och blockstorlek
+// Storlek på spelplan och block
 canvas.width = 400;
 canvas.height = 400;
 const boxSize = 20;
@@ -10,8 +10,8 @@ const boxSize = 20;
 // Ormens inställningar
 let snake = [{ x: 200, y: 200 }]; // Startposition för ormen
 let direction = { x: 0, y: 0 }; // Ingen rörelse i början
-let nextDirection = { x: 0, y: 0 }; // För att undvika direktkollisioner
-let food = generateFood(); // Första matposition
+let nextDirection = { x: 0, y: 0 }; // För att hantera riktning säkert
+let food = generateFood(); // Första matpositionen
 let score = 0;
 let gameRunning = true; // För att hantera spelstatus
 
@@ -33,7 +33,7 @@ function update() {
   // Uppdatera riktning
   direction = nextDirection;
 
-  // Beräkna ny huvudposition
+  // Beräkna huvudets nya position
   const head = { x: snake[0].x + direction.x * boxSize, y: snake[0].y + direction.y * boxSize };
 
   // Kontrollera kollision med väggar
@@ -85,7 +85,7 @@ function draw() {
   ctx.fillText(`Score: ${score}`, 10, 20);
 }
 
-// Generera mat på slumpmässig position
+// Generera mat på slumpmässig plats
 function generateFood() {
   let foodX, foodY;
   let isOnSnake;
@@ -94,7 +94,7 @@ function generateFood() {
     foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
     foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
 
-    // Kontrollera om maten landar på ormen
+    // Kontrollera om maten hamnar på ormen
     isOnSnake = snake.some(segment => segment.x === foodX && segment.y === foodY);
   } while (isOnSnake);
 
