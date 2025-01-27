@@ -1,4 +1,3 @@
-/* Centrera spelet på sidan */
 body {
   display: flex;
   flex-direction: column;
@@ -16,6 +15,6 @@ h1 {
 }
 
 canvas {
-  border: 2px solid #fff;
-  background-color: #000;
+  border: 2px solid white;
+  background-color: black;
 }
