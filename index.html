@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rektangulär Bana</title>
+  <title>Snake-spelet</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="game-container">
-    <div id="track">
-      <div id="car"></div>
-    </div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
     <div id="game-over" class="hidden">
-      <h2>Bilen nuddade kanten! Försök igen.</h2>
-      <button id="retry-btn">Börja om</button>
+      <h2>Game Over! Din poäng: <span id="score"></span></h2>
+      <button id="retry-btn">Försök igen</button>
     </div>
   </div>
   <script src="script.js"></script>
