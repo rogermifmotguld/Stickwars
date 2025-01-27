@@ -10,14 +10,17 @@ const boxSize = 20;
 // Ormens inställningar
 let snake = [{ x: 200, y: 200 }]; // Startposition för ormen
 let direction = { x: 0, y: 0 }; // Ingen rörelse i början
-let nextDirection = { x: 0, y: 0 }; // Riktning uppdateras endast efter input
+let nextDirection = { x: 0, y: 0 }; // Riktning väntar på tangenttryck
 let food = generateFood(); // Generera första matpositionen
 let score = 0;
+let isGameOver = false;
 
 // Spelloopen
 function gameLoop() {
-  update();
-  draw();
+  if (!isGameOver) {
+    update();
+    draw();
+  }
 }
 
 // Uppdatera spelstatus
@@ -27,7 +30,7 @@ function update() {
     direction = nextDirection;
   }
 
-  // Om ormen inte rör sig, vänta tills användaren trycker på en tangent
+  // Om ormen inte rör sig, vänta på tangenttryck
   if (direction.x === 0 && direction.y === 0) {
     return;
   }
@@ -86,8 +89,17 @@ function draw() {
 
 // Generera mat på en slumpmässig plats
 function generateFood() {
-  const foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
-  const foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
+  let foodX, foodY;
+  let isOnSnake;
+
+  // Generera mat tills den inte hamnar på ormen
+  do {
+    foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
+    foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
+
+    isOnSnake = snake.some(segment => segment.x === foodX && segment.y === foodY);
+  } while (isOnSnake);
+
   return { x: foodX, y: foodY };
 }
 
@@ -106,13 +118,19 @@ document.addEventListener('keydown', (event) => {
 
 // Om spelet tar slut
 function gameOver() {
+  isGameOver = true;
   alert(`Game Over! Your score: ${score}`);
-  // Återställ spelets startläge
+  resetGame();
+}
+
+// Återställ spelet
+function resetGame() {
   snake = [{ x: 200, y: 200 }];
   direction = { x: 0, y: 0 };
   nextDirection = { x: 0, y: 0 };
   score = 0;
   food = generateFood();
+  isGameOver = false;
 }
 
 // Starta spelet
