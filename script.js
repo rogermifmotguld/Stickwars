@@ -15,8 +15,9 @@ let food = generateFood();
 let score = 0;
 let gameRunning = true;
 
-// Poäng eller frågesektion
-const infoText = document.getElementById('infoText');
+// Referenser till poäng och fråga
+const scoreText = document.getElementById('scoreText');
+const questionText = document.getElementById('questionText');
 
 // Spelloopen
 function gameLoop() {
@@ -61,11 +62,12 @@ function update() {
     score++;
     food = generateFood();
 
-    // Kontrollera om spelaren har ätit fem bitar
+    // Uppdatera poängen
+    updateScore();
+
+    // Visa frågan när poängen är 5
     if (score === 5) {
-      displayQuestion(); // Visa frågan istället för poängen
-    } else {
-      updateScoreText(); // Uppdatera poängen om vi inte är vid fem poäng än
+      showQuestion();
     }
   } else {
     // Ta bort svansen om ormen inte äter
@@ -107,13 +109,13 @@ function generateFood() {
 }
 
 // Uppdatera poängtexten
-function updateScoreText() {
-  infoText.textContent = `Poäng: ${score}`;
+function updateScore() {
+  scoreText.textContent = `Poäng: ${score}`;
 }
 
-// Visa frågan istället för poäng
-function displayQuestion() {
-  infoText.textContent = 'Vad menas med förnuft och hur kopplas det till upplysningen?';
+// Visa frågan
+function showQuestion() {
+  questionText.style.display = 'block'; // Gör frågan synlig
 }
 
 // Hantera tangenttryckningar
@@ -144,7 +146,8 @@ function resetGame() {
   score = 0;
   food = generateFood();
   gameRunning = true;
-  updateScoreText(); // Återställ poängtexten
+  updateScore(); // Återställ poängtexten
+  questionText.style.display = 'none'; // Dölj frågan
 }
 
 // Starta spelloopen
