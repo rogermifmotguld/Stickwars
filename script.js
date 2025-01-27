@@ -15,12 +15,8 @@ let food = generateFood();
 let score = 0;
 let gameRunning = true;
 
-// Kontroll för fråga
-let questionDisplayed = false; // Säkerställer att frågan bara visas en gång
-
-// Frågesektion (denna visas under poängraden)
-const questionText = document.getElementById('questionText');
-const answersContainer = document.getElementById('answersContainer');
+// Poäng eller frågesektion
+const infoText = document.getElementById('infoText');
 
 // Spelloopen
 function gameLoop() {
@@ -66,9 +62,10 @@ function update() {
     food = generateFood();
 
     // Kontrollera om spelaren har ätit fem bitar
-    if (score === 5 && !questionDisplayed) {
-      displayQuestion(); // Visa frågan
-      questionDisplayed = true; // Förhindra att samma fråga visas flera gånger
+    if (score === 5) {
+      displayQuestion(); // Visa frågan istället för poängen
+    } else {
+      updateScoreText(); // Uppdatera poängen om vi inte är vid fem poäng än
     }
   } else {
     // Ta bort svansen om ormen inte äter
@@ -91,16 +88,6 @@ function draw() {
   // Rita maten
   ctx.fillStyle = 'red';
   ctx.fillRect(food.x, food.y, boxSize, boxSize);
-
-  // Rita poäng
-  ctx.fillStyle = 'white';
-  ctx.font = '20px Arial';
-  ctx.fillText(`Score: ${score}`, 10, 20);
-
-  // Om frågan är aktiv, se till att den visas i frågesektionen
-  if (questionDisplayed) {
-    questionText.style.display = 'block'; // Gör frågan synlig
-  }
 }
 
 // Generera mat på slumpmässig plats
@@ -119,8 +106,46 @@ function generateFood() {
   return { x: foodX, y: foodY };
 }
 
+// Uppdatera poängtexten
+function updateScoreText() {
+  infoText.textContent = `Poäng: ${score}`;
+}
+
+// Visa frågan istället för poäng
+function displayQuestion() {
+  infoText.textContent = 'Vad menas med förnuft och hur kopplas det till upplysningen?';
+}
+
 // Hantera tangenttryckningar
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowUp' && direction.y === 0) {
     nextDirection = { x: 0, y: -1 };
-  } else if (event.key === 'ArrowDown' &&
+  } else if (event.key === 'ArrowDown' && direction.y === 0) {
+    nextDirection = { x: 0, y: 1 };
+  } else if (event.key === 'ArrowLeft' && direction.x === 0) {
+    nextDirection = { x: -1, y: 0 };
+  } else if (event.key === 'ArrowRight' && direction.x === 0) {
+    nextDirection = { x: 1, y: 0 };
+  }
+});
+
+// Slut på spelet
+function endGame() {
+  gameRunning = false;
+  alert(`Game Over! Din poäng: ${score}`);
+  resetGame();
+}
+
+// Återställ spelet
+function resetGame() {
+  snake = [{ x: 200, y: 200 }];
+  direction = { x: 0, y: 0 };
+  nextDirection = { x: 0, y: 0 };
+  score = 0;
+  food = generateFood();
+  gameRunning = true;
+  updateScoreText(); // Återställ poängtexten
+}
+
+// Starta spelloopen
+setInterval(gameLoop, 100);
