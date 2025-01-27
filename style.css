@@ -20,29 +20,14 @@ canvas {
   background-color: black;
 }
 
-/* Frågesektion */
-#questionSection {
+/* Sektionen för poäng eller fråga */
+#infoSection {
   margin-top: 20px;
   text-align: center;
   color: white;
 }
 
-#answersContainer {
-  margin-top: 10px;
-}
-
-.answerButton {
-  display: inline-block;
-  margin: 5px;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.answerButton:hover {
-  background-color: #45a049;
+#infoText {
+  font-size: 20px;
+  font-weight: bold;
 }
