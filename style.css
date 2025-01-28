@@ -20,9 +20,16 @@ canvas {
   background-color: black;
 }
 
-/* Meddelande för paus */
-#pauseMessage {
+/* Poäng och pausmeddelande */
+#scoreText {
   font-size: 20px;
-  margin-top: 15px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#pauseMessage {
+  font-size: 18px;
+  margin-top: 10px;
   font-style: italic;
+  display: none; /* Dölj pausmeddelandet tills det behövs */
 }
