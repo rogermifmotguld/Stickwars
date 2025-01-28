@@ -17,27 +17,14 @@ let isPaused = false;
 
 // HTML-element
 const scoreText = document.getElementById('scoreText');
-const pauseMessage = document.getElementById('pauseMessage');
+const questionText = document.getElementById('questionText');
+const answerSection = document.getElementById('answerSection');
 
-// Pauspoäng
-const pausePoints = new Set([
-  5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
-  100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165,
-  170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235,
-  240, 245, 250
-]);
-
-// Lyssna efter tangenttryck
+// Lyssna efter tangenttryck för att styra ormen
 document.addEventListener('keydown', (event) => {
-  // Om spelet är pausat, återuppta det
-  if (isPaused) {
-    isPaused = false;
-    pauseMessage.style.display = 'none';
-    gameLoop(); // Starta om spelloopen
-    return;
-  }
+  // Om spelet är pausat, avbryt tangenttryck
+  if (isPaused) return;
 
-  // Styr ormen om spelet inte är pausat
   if (event.key === 'ArrowUp' && direction.y === 0) {
     nextDirection = { x: 0, y: -boxSize };
   } else if (event.key === 'ArrowDown' && direction.y === 0) {
@@ -51,7 +38,7 @@ document.addEventListener('keydown', (event) => {
 
 // Spelloopen
 function gameLoop() {
-  if (isPaused) return; // Pausa spelet om isPaused är true
+  if (isPaused) return;
 
   update();
   draw();
@@ -63,10 +50,10 @@ function gameLoop() {
 function update() {
   direction = nextDirection;
 
-  // Beräkna ny position för ormens huvud
+  // Ny huvudposition
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
-  // Kontrollera kollision med väggar
+  // Kontrollera väggkollision
   if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
     alert(`Game Over! Din poäng: ${score}`);
     document.location.reload();
@@ -76,16 +63,16 @@ function update() {
   // Kontrollera om ormen äter mat
   if (head.x === food.x && head.y === food.y) {
     score++;
-    updateScore(); // Uppdatera poängvisningen
-    food = generateFood(); // Generera ny mat
+    updateScore();
+    food = generateFood();
 
-    // Kontrollera om spelet ska pausas
-    if (pausePoints.has(score)) {
-      pauseGame();
-      return; // Avsluta uppdateringen tills spelet återupptas
+    // Pausa spelet vid poäng 5 och visa fråga
+    if (score === 5) {
+      pauseGameWithQuestion();
+      return;
     }
   } else {
-    snake.pop(); // Ta bort sista delen av ormen
+    snake.pop();
   }
 
   // Kontrollera kollision med sig själv
@@ -97,13 +84,12 @@ function update() {
     }
   }
 
-  // Lägg till det nya huvudet
+  // Lägg till huvud
   snake.unshift(head);
 }
 
 // Rita spelet
 function draw() {
-  // Rensa canvas
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -118,7 +104,7 @@ function draw() {
   ctx.fillRect(food.x, food.y, boxSize, boxSize);
 }
 
-// Generera mat på slumpmässig plats
+// Generera mat
 function generateFood() {
   let foodX, foodY;
   let isOnSnake;
@@ -127,7 +113,6 @@ function generateFood() {
     foodX = Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize;
     foodY = Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize;
 
-    // Kontrollera att maten inte hamnar på ormen
     isOnSnake = snake.some(segment => segment.x === foodX && segment.y === foodY);
   } while (isOnSnake);
 
@@ -139,10 +124,24 @@ function updateScore() {
   scoreText.textContent = `Poäng: ${score}`;
 }
 
-// Pausa spelet
-function pauseGame() {
+// Pausa spelet och visa fråga
+function pauseGameWithQuestion() {
   isPaused = true;
-  pauseMessage.style.display = 'block';
+  questionText.style.display = 'block';
+  answerSection.style.display = 'block';
+}
+
+// Hantera svar och återuppta spelet
+function answerQuestion(answer) {
+  if (answer === 1) {
+    alert("Rätt svar! Spelet fortsätter.");
+    questionText.style.display = 'none';
+    answerSection.style.display = 'none';
+    isPaused = false;
+    gameLoop();
+  } else {
+    alert("Fel svar! Försök igen.");
+  }
 }
 
 // Starta spelet
