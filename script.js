@@ -22,7 +22,7 @@ const answerSection = document.getElementById('answerSection');
 
 // Lyssna efter tangenttryck för att styra ormen
 document.addEventListener('keydown', (event) => {
-  if (isPaused) return; // Avbryt tangenttryck om spelet är pausat
+  if (isPaused) return; // Om spelet är pausat, avbryt tangenttryck
 
   if (event.key === 'ArrowUp' && direction.y === 0) {
     nextDirection = { x: 0, y: -boxSize };
@@ -37,7 +37,7 @@ document.addEventListener('keydown', (event) => {
 
 // Spelloopen
 function gameLoop() {
-  if (isPaused) return; // Pausa loopen om spelet är pausat
+  if (isPaused) return; // Stoppa loopen om spelet är pausat
 
   update();
   draw();
