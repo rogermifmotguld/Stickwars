@@ -8,23 +8,24 @@ canvas.height = 400;
 const boxSize = 20;
 
 // Startvärden
-let snake = [{ x: 200, y: 200 }]; // Startposition för ormen
-let direction = { x: 0, y: 0 };   // Ormens riktning
-let nextDirection = { x: 0, y: 0 }; // Nästa riktning (hanterar samtidiga tangenttryck)
-let food = generateFood();        // Generera mat på en slumpmässig plats
-let score = 0;                    // Poängräkning
+let snake = [{ x: 200, y: 200 }]; // Ormens startposition
+let direction = { x: 0, y: 0 };   // Ormens rörelseriktning
+let nextDirection = { x: 0, y: 0 }; // Nästa riktning för att hantera samtidiga tangenttryck
+let food = generateFood();        // Generera mat
+let score = 0;                    // Startpoäng
 let isPaused = false;             // Kontroll för om spelet är pausat
 
-// Referens till pausmeddelande
-const pauseMessage = document.getElementById('pauseMessage');
+// HTML-referenser
+const scoreText = document.getElementById('scoreText'); // Poängtexten
+const pauseMessage = document.getElementById('pauseMessage'); // Pausmeddelande
 
-// Lyssna efter tangenttryck för att styra ormen eller återuppta spelet
+// Lyssna efter tangenttryck
 document.addEventListener('keydown', (event) => {
-  // Återuppta spelet om det är pausat
+  // Om spelet är pausat, återuppta det
   if (isPaused) {
     isPaused = false;
-    pauseMessage.style.display = 'none';
-    gameLoop();
+    pauseMessage.style.display = 'none'; // Dölj pausmeddelandet
+    gameLoop(); // Starta om spelloopen
     return;
   }
 
@@ -42,30 +43,32 @@ document.addEventListener('keydown', (event) => {
 
 // Spelloopen
 function gameLoop() {
-  if (isPaused) return; // Avsluta loopen om spelet är pausat
+  if (isPaused) return; // Om spelet är pausat, avbryt loopen
 
-  update();
-  draw();
+  update(); // Uppdatera spelets logik
+  draw();   // Rita spelet
 
-  setTimeout(gameLoop, 100); // Uppdatera spelet varje 100ms
+  setTimeout(gameLoop, 100); // Uppdatera loopen var 100:e millisekund
 }
 
 // Uppdatera spelets logik
 function update() {
   direction = nextDirection;
 
-  // Skapa en ny position för ormens huvud
+  // Beräkna ormens nya huvudposition
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
   // Kontrollera kollision med väggar
   if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
     alert(`Game Over! Poäng: ${score}`);
     document.location.reload(); // Starta om spelet
+    return;
   }
 
   // Kontrollera om ormen äter mat
   if (head.x === food.x && head.y === food.y) {
     score++;
+    updateScore(); // Uppdatera poängvisningen
     food = generateFood(); // Generera ny mat
 
     // Pausa spelet vid 5 poäng
@@ -73,7 +76,7 @@ function update() {
       pauseGame();
     }
   } else {
-    snake.pop(); // Ta bort ormens sista del om den inte äter
+    snake.pop(); // Ta bort sista delen av ormen om den inte äter
   }
 
   // Kontrollera kollision med sig själv
@@ -81,6 +84,7 @@ function update() {
     if (segment.x === head.x && segment.y === head.y) {
       alert(`Game Over! Poäng: ${score}`);
       document.location.reload();
+      return;
     }
   }
 
@@ -121,10 +125,15 @@ function generateFood() {
   return { x: foodX, y: foodY };
 }
 
+// Uppdatera poäng
+function updateScore() {
+  scoreText.textContent = `Poäng: ${score}`;
+}
+
 // Pausa spelet
 function pauseGame() {
   isPaused = true;
-  pauseMessage.style.display = 'block'; // Visa meddelandet att spelet är pausat
+  pauseMessage.style.display = 'block'; // Visa pausmeddelandet
 }
 
 // Starta spelet
