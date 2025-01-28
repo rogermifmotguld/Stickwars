@@ -19,3 +19,10 @@ canvas {
   border: 2px solid white;
   background-color: black;
 }
+
+/* Meddelande för paus */
+#pauseMessage {
+  font-size: 20px;
+  margin-top: 15px;
+  font-style: italic;
+}
