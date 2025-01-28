@@ -16,7 +16,7 @@ let score = 0;
 let isPaused = false;
 
 // Pausintervaller och frågor/svar
-const pauseIntervals = [5, 10]; // Lägg till fler intervaller här
+const pauseIntervals = [5, 10]; // Poäng där spelet ska pausa
 const questions = {
   5: {
     question: "Vad menas med förnuft och hur kopplas det till upplysningen?",
@@ -158,7 +158,7 @@ function pauseGameWithQuestion(score) {
     ...currentQuestion.wrongAnswers,
   ].sort(() => Math.random() - 0.5); // Blanda svaren slumpmässigt
 
-  allAnswers.forEach((answer, index) => {
+  allAnswers.forEach((answer) => {
     const button = document.createElement("button");
     button.className = "answerButton";
     button.textContent = answer;
