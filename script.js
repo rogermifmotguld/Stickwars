@@ -19,6 +19,14 @@ let isPaused = false;             // Kontroll för om spelet är pausat
 const scoreText = document.getElementById('scoreText'); // Poängtexten
 const pauseMessage = document.getElementById('pauseMessage'); // Pausmeddelande
 
+// Lista över pauspoäng
+const pausePoints = new Set([
+  10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 
+  100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 
+  170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 
+  240, 245, 250
+]);
+
 // Lyssna efter tangenttryck
 document.addEventListener('keydown', (event) => {
   // Om spelet är pausat, återuppta det
@@ -71,8 +79,8 @@ function update() {
     updateScore(); // Uppdatera poängvisningen
     food = generateFood(); // Generera ny mat
 
-    // Pausa spelet vid 5 poäng
-    if (score === 5) {
+    // Pausa spelet om poängen finns i pauslistan
+    if (pausePoints.has(score)) {
       pauseGame();
     }
   } else {
