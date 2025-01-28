@@ -22,8 +22,7 @@ const answerSection = document.getElementById('answerSection');
 
 // Lyssna efter tangenttryck för att styra ormen
 document.addEventListener('keydown', (event) => {
-  // Om spelet är pausat, avbryt tangenttryck
-  if (isPaused) return;
+  if (isPaused) return; // Avbryt tangenttryck om spelet är pausat
 
   if (event.key === 'ArrowUp' && direction.y === 0) {
     nextDirection = { x: 0, y: -boxSize };
@@ -38,7 +37,7 @@ document.addEventListener('keydown', (event) => {
 
 // Spelloopen
 function gameLoop() {
-  if (isPaused) return;
+  if (isPaused) return; // Pausa loopen om spelet är pausat
 
   update();
   draw();
@@ -127,8 +126,8 @@ function updateScore() {
 // Pausa spelet och visa fråga
 function pauseGameWithQuestion() {
   isPaused = true;
-  questionText.style.display = 'block';
-  answerSection.style.display = 'block';
+  questionText.style.display = 'block'; // Visa frågan
+  answerSection.style.display = 'block'; // Visa svarsalternativen
 }
 
 // Hantera svar och återuppta spelet
