@@ -33,7 +33,7 @@ document.addEventListener('keydown', (event) => {
   if (isPaused) {
     isPaused = false;
     pauseMessage.style.display = 'none';
-    gameLoop();
+    gameLoop(); // Starta om spelloopen
     return;
   }
 
