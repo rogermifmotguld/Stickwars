@@ -25,12 +25,12 @@ canvas {
   font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
-  color: white; /* Vit färg för poängtexten */
+  color: white;
 }
 
 #pauseMessage {
   font-size: 18px;
   margin-top: 10px;
   font-style: italic;
-  display: none; /* Dölj pausmeddelandet tills det behövs */
+  display: none;
 }
