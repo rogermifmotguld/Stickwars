@@ -148,6 +148,8 @@ function pauseGameWithQuestion(score) {
 
   // Hämta fråga och svar för aktuell poäng
   const currentQuestion = questions[score];
+  if (!currentQuestion) return; // Säkerställ att det finns en fråga
+
   questionText.textContent = currentQuestion.question;
   questionText.style.display = "block";
   answerSection.innerHTML = ""; // Töm tidigare svar
