@@ -1,36 +1,30 @@
-/* Stil för spelet */
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #333;
-  color: white;
-  font-family: Arial, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Snake Game</h1>
+  <div id="gameContainer">
+    <!-- Frågesektion till vänster -->
+    <div id="questionSection">
+      <p id="questionText" style="display: none;">Vad menas med förnuft och hur kopplas det till upplysningen?</p>
+    </div>
 
-h1 {
-  margin-bottom: 10px;
-}
+    <!-- Canvas i mitten -->
+    <canvas id="gameCanvas"></canvas>
 
-canvas {
-  border: 2px solid white;
-  background-color: black;
-}
-
-/* Poäng och pausmeddelande */
-#scoreText {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-  color: white;
-}
-
-#pauseMessage {
-  font-size: 18px;
-  margin-top: 10px;
-  font-style: italic;
-  display: none;
-}
+    <!-- Svarsalternativ till höger -->
+    <div id="answerSection" style="display: none;">
+      <button class="answerButton" onclick="answerQuestion(1)">Logiskt tänkande och kritisk analys</button> <!-- Rätt svar -->
+      <button class="answerButton" onclick="answerQuestion(2)">Blind tro på auktoriteter</button> <!-- Falskt svar -->
+      <button class="answerButton" onclick="answerQuestion(3)">Kungens makt är absolut</button> <!-- Falskt svar -->
+    </div>
+  </div>
+  <p id="scoreText">Poäng: 0</p>
+  <script src="script.js"></script>
+</body>
+</html>
