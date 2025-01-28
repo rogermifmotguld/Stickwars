@@ -8,9 +8,23 @@
 </head>
 <body>
   <h1>Snake Game</h1>
-  <canvas id="gameCanvas"></canvas>
+  <div id="gameContainer">
+    <!-- Frågesektion till vänster -->
+    <div id="questionSection">
+      <p id="questionText" style="display: none;">Vad menas med förnuft och hur kopplas det till upplysningen?</p>
+    </div>
+
+    <!-- Canvas i mitten -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Svarsalternativ till höger -->
+    <div id="answerSection" style="display: none;">
+      <button class="answerButton" onclick="answerQuestion(1)">Logiskt tänkande och kritisk analys</button> <!-- Rätt svar -->
+      <button class="answerButton" onclick="answerQuestion(2)">Blind tro på auktoriteter</button> <!-- Falskt svar -->
+      <button class="answerButton" onclick="answerQuestion(3)">Kungens makt är absolut</button> <!-- Falskt svar -->
+    </div>
+  </div>
   <p id="scoreText">Poäng: 0</p>
-  <p id="pauseMessage" style="display: none;">Spelet är pausat! Tryck på valfri tangent för att fortsätta.</p>
   <script src="script.js"></script>
 </body>
 </html>
