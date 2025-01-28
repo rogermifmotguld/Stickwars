@@ -82,6 +82,7 @@ function update() {
     // Pausa spelet om poängen finns i pauslistan
     if (pausePoints.has(score)) {
       pauseGame();
+      return; // Stoppa uppdateringen tills spelet återupptas
     }
   } else {
     snake.pop(); // Ta bort sista delen av ormen om den inte äter
