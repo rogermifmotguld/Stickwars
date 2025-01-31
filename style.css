@@ -20,7 +20,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px; /* Mellanrum mellan frågan, canvasen och svaren */
+  gap: 30px;
 }
 
 #gameCanvas {
@@ -28,6 +28,7 @@ h1 {
   background-color: black;
   width: 400px;
   height: 400px;
+  touch-action: none; /* Förhindrar webbläsarnavigering vid touch */
 }
 
 /* Frågesektion till vänster */
