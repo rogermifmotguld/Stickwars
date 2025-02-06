@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake Game</title>
+  <title>Snake Game med Frågor</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Snake Game</h1>
+
   <div id="gameContainer">
     <!-- Frågesektion till vänster -->
     <div id="questionSection">
       <p id="questionText" style="display: none;">Frågan kommer här...</p>
     </div>
 
-    <!-- Canvas i mitten -->
+    <!-- Spelplan (Canvas i mitten) -->
     <canvas id="gameCanvas"></canvas>
 
     <!-- Svarsalternativ till höger -->
     <div id="answerSection" style="display: none;"></div>
   </div>
+
   <p id="scoreText">Poäng: 0</p>
+
   <script src="script.js"></script>
 </body>
 </html>
