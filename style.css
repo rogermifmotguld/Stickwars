@@ -20,7 +20,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px; /* Mellanrum mellan frågan, canvasen och svaren */
+  gap: 30px;
 }
 
 #gameCanvas {
@@ -43,6 +43,7 @@ h1 {
   text-align: right;
 }
 
+/* Stil för svarsknappar */
 .answerButton {
   display: block;
   margin: 10px 0;
