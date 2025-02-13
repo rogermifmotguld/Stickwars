@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake Game med Frågor</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D-Spel på GitHub</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
 </head>
 <body>
-  <h1>Snake Game</h1>
-
-  <div id="gameContainer">
-    <!-- Frågesektion till vänster -->
-    <div id="questionSection">
-      <p id="questionText" style="display: none;">Frågan kommer här...</p>
-    </div>
-
-    <!-- Spelplan (Canvas i mitten) -->
     <canvas id="gameCanvas"></canvas>
+    <script>
+        // Skapa Babylon.js-spel i webbläsaren
+        const canvas = document.getElementById("gameCanvas");
+        const engine = new BABYLON.Engine(canvas, true);
+        const scene = new BABYLON.Scene(engine);
 
-    <!-- Svarsalternativ till höger -->
-    <div id="answerSection" style="display: none;"></div>
-  </div>
+        // Skapa en spelarkamera
+        const camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 2, -10), scene);
+        camera.attachControl(canvas, true);
 
-  <p id="scoreText">Poäng: 0</p>
+        // Skapa ljus
+        const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0), scene);
 
-  <script src="script.js"></script>
+        // Skapa mark (terräng)
+        const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 20, height: 20 }, scene);
+
+        // Skapa en låda (exempel på objekt)
+        const box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
+        box.position.y = 1;
+
+        // Uppdatera spelet
+        engine.runRenderLoop(() => {
+            scene.render();
+        });
+
+        // Anpassa till skärmstorlek
+        window.addEventListener("resize", () => {
+            engine.resize();
+        });
+    </script>
 </body>
 </html>
