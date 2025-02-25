@@ -25,35 +25,54 @@ h1 {
 
 /* D-pad styling */
 .dpad {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background-color: rgba(34, 34, 34, 0.5); /* Svart med 50% genomskinlighet */
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    align-items: center;
-    justify-items: center;
+    grid-template-columns: 50px 50px 50px;
+    grid-template-rows: 50px 50px 50px;
+    gap: 5px;
+    background-color: rgba(34, 34, 34, 0.5);
+    padding: 10px;
     border-radius: 10px;
+    position: relative;
 }
 
 .dpad-button {
-    width: 40px;
-    height: 40px;
-    background-color: rgba(0, 0, 0, 0.5); /* Svart med 50% genomskinlighet */
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 20px;
     border: none;
     border-radius: 5px;
 }
 
+#left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+/* Mittpunkten i D-pad */
 .dpad-center {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(68, 68, 68, 0.5);
-    border-radius: 5px;
     grid-column: 2;
     grid-row: 2;
+    border-radius: 5px;
 }
 
 /* A- och B-knappar */
