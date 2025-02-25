@@ -10,20 +10,23 @@
     <h1>NES Touch-spel</h1>
     <p id="score">Poäng: 0</p>
 
+    <!-- Spelplan (Canvas) -->
+    <canvas id="gameCanvas"></canvas>
+
     <div class="controller">
-        <!-- D-pad (Styrkors) -->
+        <!-- A- och B-knappar (till vänster) -->
+        <div class="buttons">
+            <button class="red-button" id="buttonA">A</button>
+            <button class="red-button" id="buttonB">B</button>
+        </div>
+
+        <!-- D-pad (Styrkors, till höger) -->
         <div class="dpad">
             <button class="dpad-button" id="left">◀</button>
             <button class="dpad-button" id="right">▶</button>
             <button class="dpad-button" id="up">▲</button>
             <button class="dpad-button" id="down">▼</button>
             <div class="dpad-center"></div>
-        </div>
-
-        <!-- A- och B-knappar -->
-        <div class="buttons">
-            <button class="red-button" id="buttonA">A</button>
-            <button class="red-button" id="buttonB">B</button>
         </div>
     </div>
 
