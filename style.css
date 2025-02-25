@@ -24,21 +24,17 @@ h1 {
 }
 
 /* D-pad styling */
-.dpad-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .dpad {
+    display: grid;
+    grid-template-columns: 50px 50px 50px;
+    grid-template-rows: 50px 50px 50px;
+    gap: 5px;
     position: relative;
-    width: 120px;
-    height: 120px;
+    background-color: transparent;
 }
 
 /* D-pad knappar */
 .dpad-button {
-    position: absolute;
     width: 50px;
     height: 50px;
     background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
@@ -50,38 +46,32 @@ h1 {
 
 /* Placering av D-pad knappar */
 #left {
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    grid-column: 1;
+    grid-row: 2;
 }
 
 #right {
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    grid-column: 3;
+    grid-row: 2;
 }
 
 #up {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    grid-column: 2;
+    grid-row: 1;
 }
 
 #down {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    grid-column: 2;
+    grid-row: 3;
 }
 
 /* Mittpunkt i D-pad */
 .dpad-center {
-    position: absolute;
     width: 50px;
     height: 50px;
-    background-color: rgba(68, 68, 68, 0.5);
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    background-color: rgba(68, 68, 68, 0.8);
+    grid-column: 2;
+    grid-row: 2;
     border-radius: 10px;
 }
 
