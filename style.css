@@ -31,8 +31,9 @@ h1 {
     flex-direction: row; /* Placera D-pad och knappar horisontellt */
     align-items: center;
     justify-content: center;
-    gap: 20px; /* Mindre mellanrum för kompakt layout */
-    margin-top: 5px;
+    gap: 40px; /* Mellanrum mellan D-pad och knappar */
+    margin-top: 10px;
+    position: relative;
 }
 
 /* Styrplatta (D-pad) */
@@ -65,7 +66,7 @@ h1 {
 #right {
     grid-column: 3;
     grid-row: 2;
-    position: relative; /* Behövs för att placera A/B-knappar */
+    position: relative; /* Gör att A och B kan placeras relativt till denna knapp */
 }
 
 #up {
@@ -91,14 +92,14 @@ h1 {
 /* A- och B-knappar placerade vid högerpilen */
 #buttonA {
     position: absolute;
-    top: -60px; /* Flyttar upp A-knappen ovanför högerpilen */
-    left: 60px; /* Justerar positionen så den är rätt vid högerpilen */
+    left: 120px; /* Justerar positionen så den är exakt vid högerpilen */
+    top: 20px; /* Flyttar upp A-knappen ovanför högerpilen */
 }
 
 #buttonB {
     position: absolute;
-    top: 60px; /* Flyttar ner B-knappen under högerpilen */
-    left: 60px;
+    left: 120px;
+    bottom: 20px; /* Flyttar ner B-knappen under högerpilen */
 }
 
 .red-button {
