@@ -18,10 +18,11 @@ h1 {
 /* NES-KONTROLL DESIGN */
 .controller {
     display: flex;
-    flex-direction: row; /* Lägger knapparna bredvid varandra */
+    flex-direction: row; /* Placera elementen bredvid varandra */
     align-items: center;
     justify-content: center;
-    gap: 60px; /* Avstånd mellan D-pad och A/B-knappar */
+    gap: 100px; /* Avstånd mellan D-pad och knappar */
+    margin-top: 30px;
 }
 
 /* D-pad styling */
@@ -30,7 +31,6 @@ h1 {
     grid-template-columns: 50px 50px 50px;
     grid-template-rows: 50px 50px 50px;
     gap: 5px;
-    position: relative;
     background-color: transparent;
 }
 
@@ -79,8 +79,8 @@ h1 {
 /* A- och B-knappar */
 .buttons {
     display: flex;
-    flex-direction: column; /* Staplar A och B vertikalt */
-    gap: 20px;
+    flex-direction: row; /* Placera A och B bredvid varandra */
+    gap: 40px;
 }
 
 .red-button {
