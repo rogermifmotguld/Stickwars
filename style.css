@@ -33,22 +33,23 @@ h1 {
     justify-content: center;
     gap: 10px; /* Mindre mellanrum för kompakt layout */
     margin-top: 5px;
+    position: relative;
 }
 
 /* Styrplatta (D-pad) */
 .dpad {
     display: grid;
-    grid-template-columns: 45px 45px 45px;
-    grid-template-rows: 45px 45px 45px;
-    gap: 3px;
+    grid-template-columns: 50px 50px 50px;
+    grid-template-rows: 50px 50px 50px;
+    gap: 5px;
     position: relative;
     background-color: transparent;
 }
 
 /* D-pad knappar */
 .dpad-button {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
     color: white;
     font-size: 20px;
@@ -80,27 +81,25 @@ h1 {
 
 /* Mittpunkten i D-pad */
 .dpad-center {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(68, 68, 68, 0.8);
     grid-column: 2;
     grid-row: 2;
     border-radius: 8px;
 }
 
-/* A- och B-knappar (positionerade nära högerpilen) */
+/* A- och B-knappar placerade ovanför och under högerpilen */
 #buttonA {
     position: absolute;
-    top: -55px; /* Flyttar upp A-knappen ovanför högerpilen */
-    left: 50%;
-    transform: translateX(-50%);
+    top: -60px; /* Flyttar upp A-knappen ovanför högerpilen */
+    left: 120px; /* Justerar positionen så den är rätt vid högerpilen */
 }
 
 #buttonB {
     position: absolute;
-    bottom: -55px; /* Flyttar ner B-knappen under högerpilen */
-    left: 50%;
-    transform: translateX(-50%);
+    top: 110px; /* Flyttar ner B-knappen under högerpilen */
+    left: 120px;
 }
 
 .red-button {
