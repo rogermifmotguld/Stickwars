@@ -12,15 +12,15 @@ h1 {
 
 #score {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* Spelplan (Canvas) */
 #gameCanvas {
     display: block;
-    margin: 0 auto 20px auto; /* Centrerar canvas */
+    margin: 0 auto 10px auto; /* Centrerar canvas */
     background-color: #000000; /* Svart bakgrund */
-    width: 300px;
+    width: 320px;
     height: 200px;
     border: 2px solid white; /* Vit ram runt spelplanen */
 }
@@ -31,29 +31,29 @@ h1 {
     flex-direction: row; /* Placera D-pad och knappar horisontellt */
     align-items: center;
     justify-content: center;
-    gap: 80px; /* Avstånd mellan D-pad och knappar */
-    margin-top: 20px;
+    gap: 40px; /* Mindre mellanrum för kompakt layout */
+    margin-top: 5px;
 }
 
 /* Styrplatta (D-pad) */
 .dpad {
     display: grid;
-    grid-template-columns: 60px 60px 60px;
-    grid-template-rows: 60px 60px 60px;
-    gap: 5px;
+    grid-template-columns: 45px 45px 45px;
+    grid-template-rows: 45px 45px 45px;
+    gap: 3px;
     position: relative;
     background-color: transparent;
 }
 
 /* D-pad knappar */
 .dpad-button {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 /* Placering av D-pad knappar (i korsform) */
@@ -79,30 +79,30 @@ h1 {
 
 /* Mittpunkten i D-pad */
 .dpad-center {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     background-color: rgba(68, 68, 68, 0.8);
     grid-column: 2;
     grid-row: 2;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 /* A- och B-knappar bredvid D-pad */
 .buttons {
     display: flex;
     flex-direction: column; /* Staplar A och B vertikalt */
-    gap: 20px;
+    gap: 10px;
 }
 
 .red-button {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(255, 0, 0, 0.7); /* Röd med 70% genomskinlighet */
     color: white;
-    font-size: 28px;
+    font-size: 20px;
     border: none;
     border-radius: 50%;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     transition: background-color 0.2s, opacity 0.2s;
 }
 
