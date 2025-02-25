@@ -1,61 +1,79 @@
-/* Stil för hela sidan */
+/* Grundläggande stil */
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #333;
-  color: white;
-  font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #cccccc; /* Grå NES-bakgrund */
+    margin: 50px;
 }
 
 h1 {
-  margin-bottom: 20px;
+    color: #333;
 }
 
-/* Layout för spelet och sektionerna */
-#gameContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
+#score {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-#gameCanvas {
-  border: 2px solid white;
-  background-color: black;
-  width: 400px;
-  height: 400px;
+/* NES-KONTROLL DESIGN */
+.controller {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
-/* Frågesektion till vänster */
-#questionSection {
-  width: 250px;
-  text-align: left;
-  color: white;
+/* D-pad styling */
+.dpad {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(34, 34, 34, 0.5); /* Svart med 50% genomskinlighet */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    border-radius: 10px;
 }
 
-/* Svarsalternativ till höger */
-#answerSection {
-  width: 250px;
-  text-align: right;
+.dpad-button {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5); /* Svart med 50% genomskinlighet */
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
 }
 
-/* Stil för svarsknappar */
-.answerButton {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 14px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.dpad-center {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(68, 68, 68, 0.5);
+    border-radius: 5px;
+    grid-column: 2;
+    grid-row: 2;
 }
 
-.answerButton:hover {
-  background-color: #45a049;
+/* A- och B-knappar */
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.red-button {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 0, 0, 0.5); /* Röd med 50% genomskinlighet */
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.red-button:active {
+    background-color: rgba(139, 0, 0, 0.8); /* Mörkröd vid tryck */
 }
