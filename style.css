@@ -20,3 +20,92 @@ h1 {
     display: block;
     margin: 0 auto 20px auto; /* Centrerar canvas */
     background-color: #000000; /* Svart bakgrund */
+    width: 300px;
+    height: 200px;
+    border: 2px solid white; /* Vit ram runt spelplanen */
+}
+
+/* NES-KONTROLL DESIGN */
+.controller {
+    display: flex;
+    flex-direction: column; /* Staplar D-pad och knappar */
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+/* Styrplatta (D-pad) */
+.dpad {
+    display: grid;
+    grid-template-columns: 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px;
+    gap: 5px;
+    position: relative;
+    background-color: transparent;
+}
+
+/* D-pad knappar */
+.dpad-button {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Placering av D-pad knappar i fyrkant */
+#left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+/* Mittpunkten i D-pad */
+.dpad-center {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(68, 68, 68, 0.8);
+    grid-column: 2;
+    grid-row: 2;
+    border-radius: 10px;
+}
+
+/* A- och B-knappar */
+.buttons {
+    display: grid;
+    grid-template-columns: 60px 60px;
+    grid-template-rows: 60px 60px;
+    gap: 10px;
+}
+
+.red-button {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 0, 0, 0.7); /* Röd med 70% genomskinlighet */
+    color: white;
+    font-size: 28px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.red-button:active {
+    background-color: rgba(139, 0, 0, 0.8); /* Mörkröd vid tryck */
+}
