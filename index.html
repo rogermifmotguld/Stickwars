@@ -3,73 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expanderande Värld</title>
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <title>NES Touch-spel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
-    <script>
-        // Skapa Babylon.js-motor och scen
-        const canvas = document.getElementById("gameCanvas");
-        const engine = new BABYLON.Engine(canvas, true);
-        const scene = new BABYLON.Scene(engine);
+    <h1>NES Touch-spel</h1>
+    <p id="score">Poäng: 0</p>
 
-        // Spelarkamera (FPS-stil)
-        const camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 2, 0), scene);
-        camera.attachControl(canvas, true);
-        camera.speed = 0.5;
+    <div class="controller">
+        <!-- D-pad (Styrkors) -->
+        <div class="dpad">
+            <button class="dpad-button" id="left">◀</button>
+            <div class="dpad-center"></div>
+            <button class="dpad-button" id="right">▶</button>
+            <button class="dpad-button" id="up">▲</button>
+            <button class="dpad-button" id="down">▼</button>
+        </div>
 
-        // Ljus
-        const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+        <!-- A- och B-knappar -->
+        <div class="buttons">
+            <button class="red-button" id="buttonA">A</button>
+            <button class="red-button" id="buttonB">B</button>
+        </div>
+    </div>
 
-        // Lagra genererad terräng
-        let groundTiles = {};
-        let tileSize = 20; // Storlek på varje markbit
-
-        function createGroundTile(x, z) {
-            let key = `${x},${z}`;
-            if (!groundTiles[key]) { // Skapa bara om det inte redan finns
-                let ground = BABYLON.MeshBuilder.CreateGround(`ground-${x}-${z}`, { width: tileSize, height: tileSize }, scene);
-                ground.position.x = x * tileSize;
-                ground.position.z = z * tileSize;
-
-                // Lägg till slumpmässiga träd
-                if (Math.random() < 0.3) {
-                    let tree = BABYLON.MeshBuilder.CreateCylinder("tree", { diameter: 1, height: 5 }, scene);
-                    tree.position.set(x * tileSize + (Math.random() * tileSize - tileSize / 2), 2.5, z * tileSize + (Math.random() * tileSize - tileSize / 2));
-                    tree.material = new BABYLON.StandardMaterial("treeMat", scene);
-                    tree.material.diffuseColor = new BABYLON.Color3(0, 1, 0); // Grönt träd
-                }
-
-                groundTiles[key] = ground;
-            }
-        }
-
-        function checkForNewTiles() {
-            let playerX = Math.floor(camera.position.x / tileSize);
-            let playerZ = Math.floor(camera.position.z / tileSize);
-
-            for (let x = playerX - 1; x <= playerX + 1; x++) {
-                for (let z = playerZ - 1; z <= playerZ + 1; z++) {
-                    createGroundTile(x, z);
-                }
-            }
-        }
-
-        // Startvärld
-        createGroundTile(0, 0);
-        checkForNewTiles();
-
-        // Uppdatera spelet
-        engine.runRenderLoop(() => {
-            checkForNewTiles(); // Skapa nya områden om spelaren rör sig
-            scene.render();
-        });
-
-        // Anpassa till skärmstorlek
-        window.addEventListener("resize", () => {
-            engine.resize();
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
