@@ -28,10 +28,11 @@ h1 {
 /* NES-KONTROLL DESIGN */
 .controller {
     display: flex;
-    flex-direction: column; /* Staplar D-pad och knappar */
+    flex-direction: row; /* Placera D-pad och knappar horisontellt */
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 80px; /* Avstånd mellan D-pad och knappar */
+    margin-top: 20px;
 }
 
 /* Styrplatta (D-pad) */
@@ -55,7 +56,7 @@ h1 {
     border-radius: 10px;
 }
 
-/* Placering av D-pad knappar i fyrkant */
+/* Placering av D-pad knappar (i korsform) */
 #left {
     grid-column: 1;
     grid-row: 2;
@@ -86,17 +87,16 @@ h1 {
     border-radius: 10px;
 }
 
-/* A- och B-knappar */
+/* A- och B-knappar bredvid D-pad */
 .buttons {
-    display: grid;
-    grid-template-columns: 60px 60px;
-    grid-template-rows: 60px 60px;
-    gap: 10px;
+    display: flex;
+    flex-direction: column; /* Staplar A och B vertikalt */
+    gap: 20px;
 }
 
 .red-button {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background-color: rgba(255, 0, 0, 0.7); /* Röd med 70% genomskinlighet */
     color: white;
     font-size: 28px;
