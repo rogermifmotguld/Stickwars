@@ -28,12 +28,11 @@ h1 {
 /* NES-KONTROLL DESIGN */
 .controller {
     display: flex;
-    flex-direction: column; /* Staplar D-pad och knappar i en kolumn */
+    flex-direction: row; /* Placera D-pad och knappar horisontellt */
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Mindre mellanrum för kompakt layout */
+    gap: 20px; /* Mindre mellanrum för kompakt layout */
     margin-top: 5px;
-    position: relative;
 }
 
 /* Styrplatta (D-pad) */
@@ -89,17 +88,17 @@ h1 {
     border-radius: 8px;
 }
 
-/* A- och B-knappar placerade ovanför och under högerpilen */
+/* A- och B-knappar placerade vid högerpilen */
 #buttonA {
     position: absolute;
     top: -60px; /* Flyttar upp A-knappen ovanför högerpilen */
-    left: 120px; /* Justerar positionen så den är rätt vid högerpilen */
+    left: 60px; /* Justerar positionen så den är rätt vid högerpilen */
 }
 
 #buttonB {
     position: absolute;
-    top: 110px; /* Flyttar ner B-knappen under högerpilen */
-    left: 120px;
+    top: 60px; /* Flyttar ner B-knappen under högerpilen */
+    left: 60px;
 }
 
 .red-button {
