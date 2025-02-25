@@ -15,86 +15,22 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Spelplan (Canvas) */
+#gameCanvas {
+    display: block;
+    margin: 0 auto 20px auto; /* Centrerar canvas */
+    background-color: #000000; /* Svart bakgrund */
+    width: 300px;
+    height: 200px;
+    border: 2px solid white; /* Vit ram runt spelplanen */
+}
+
 /* NES-KONTROLL DESIGN */
 .controller {
     display: flex;
-    flex-direction: row; /* Placera elementen bredvid varandra */
+    flex-direction: row; /* Placera elementen horisontellt */
     align-items: center;
     justify-content: center;
-    gap: 100px; /* Avstånd mellan D-pad och knappar */
-    margin-top: 30px;
-}
-
-/* D-pad styling */
-.dpad {
-    display: grid;
-    grid-template-columns: 50px 50px 50px;
-    grid-template-rows: 50px 50px 50px;
-    gap: 5px;
-    background-color: transparent;
-}
-
-/* D-pad knappar */
-.dpad-button {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
-    color: white;
-    font-size: 24px;
-    border: none;
-    border-radius: 10px;
-}
-
-/* Placering av D-pad knappar */
-#left {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-#right {
-    grid-column: 3;
-    grid-row: 2;
-}
-
-#up {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-#down {
-    grid-column: 2;
-    grid-row: 3;
-}
-
-/* Mittpunkt i D-pad */
-.dpad-center {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(68, 68, 68, 0.8);
-    grid-column: 2;
-    grid-row: 2;
-    border-radius: 10px;
-}
-
-/* A- och B-knappar */
-.buttons {
-    display: flex;
-    flex-direction: row; /* Placera A och B bredvid varandra */
-    gap: 40px;
-}
-
-.red-button {
-    width: 70px;
-    height: 70px;
-    background-color: rgba(255, 0, 0, 0.7); /* Röd med 70% genomskinlighet */
-    color: white;
-    font-size: 28px;
-    border: none;
-    border-radius: 50%;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.2s, opacity 0.2s;
-}
-
-.red-button:active {
-    background-color: rgba(139, 0, 0, 0.8); /* Mörkröd vid tryck */
+    gap: 80px; /* Avstånd mellan D-pad och knappar */
+    margin-top: 20px;
 }
