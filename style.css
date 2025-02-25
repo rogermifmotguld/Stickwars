@@ -31,7 +31,7 @@ h1 {
     flex-direction: row; /* Placera D-pad och knappar horisontellt */
     align-items: center;
     justify-content: center;
-    gap: 40px; /* Mellanrum mellan D-pad och knappar */
+    gap: 40px; /* Avstånd mellan D-pad och knappar */
     margin-top: 10px;
     position: relative;
 }
@@ -89,17 +89,19 @@ h1 {
     border-radius: 8px;
 }
 
-/* A- och B-knappar placerade vid högerpilen */
-#buttonA {
+/* A- och B-knappar placerade ovanför och under högerpilen */
+#a-container,
+#b-container {
     position: absolute;
-    left: 120px; /* Justerar positionen så den är exakt vid högerpilen */
-    top: 20px; /* Flyttar upp A-knappen ovanför högerpilen */
+    left: 160px; /* Flyttar knapparna till höger om D-pad */
 }
 
-#buttonB {
-    position: absolute;
-    left: 120px;
-    bottom: 20px; /* Flyttar ner B-knappen under högerpilen */
+#a-container {
+    top: -60px; /* Flyttar upp A-knappen ovanför högerpilen */
+}
+
+#b-container {
+    top: 60px; /* Flyttar ner B-knappen under högerpilen */
 }
 
 .red-button {
