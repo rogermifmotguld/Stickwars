@@ -20,23 +20,27 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 40px;
 }
 
 /* D-pad styling */
+.dpad-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dpad {
-    display: grid;
-    grid-template-columns: 60px 60px 60px;
-    grid-template-rows: 60px 60px 60px;
-    gap: 5px;
     position: relative;
-    background-color: transparent;
+    width: 120px;
+    height: 120px;
 }
 
 /* D-pad knappar */
 .dpad-button {
-    width: 60px;
-    height: 60px;
+    position: absolute;
+    width: 50px;
+    height: 50px;
     background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
     color: white;
     font-size: 24px;
@@ -46,39 +50,45 @@ h1 {
 
 /* Placering av D-pad knappar */
 #left {
-    grid-column: 1;
-    grid-row: 2;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #right {
-    grid-column: 3;
-    grid-row: 2;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #up {
-    grid-column: 2;
-    grid-row: 1;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #down {
-    grid-column: 2;
-    grid-row: 3;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Mittpunkt i D-pad */
 .dpad-center {
-    width: 60px;
-    height: 60px;
+    position: absolute;
+    width: 50px;
+    height: 50px;
     background-color: rgba(68, 68, 68, 0.5);
-    grid-column: 2;
-    grid-row: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 10px;
 }
 
 /* A- och B-knappar */
 .buttons {
     display: flex;
-    gap: 40px;
+    gap: 50px;
 }
 
 .red-button {
