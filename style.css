@@ -1,121 +1,19 @@
 /* Grundläggande stil */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #cccccc; /* Grå NES-bakgrund */
-    margin: 50px;
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hindrar scrollning */
+    touch-action: none; /* Förhindrar oväntade touch-gester */
+    background-color: black; /* Svart bakgrund */
 }
 
-h1 {
-    color: #333;
-}
-
-#score {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-/* Spelplan (Canvas) */
+/* Canvas täcker hela skärmen */
 #gameCanvas {
     display: block;
-    margin: 0 auto 10px auto; /* Centrerar canvas */
-    background-color: #000000; /* Svart bakgrund */
-    width: 320px;
-    height: 200px;
-    border: 2px solid white; /* Vit ram runt spelplanen */
-}
-
-/* NES-KONTROLL DESIGN */
-.controller {
-    display: flex;
-    flex-direction: row; /* Placera D-pad och knappar horisontellt */
-    align-items: center;
-    justify-content: center;
-    gap: 40px; /* Avstånd mellan D-pad och knappar */
-    margin-top: 10px;
-    position: relative;
-}
-
-/* Styrplatta (D-pad) */
-.dpad {
-    display: grid;
-    grid-template-columns: 50px 50px 50px;
-    grid-template-rows: 50px 50px 50px;
-    gap: 5px;
-    position: relative;
-    background-color: transparent;
-}
-
-/* D-pad knappar */
-.dpad-button {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.6); /* Svart med 60% genomskinlighet */
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 8px;
-}
-
-/* Placering av D-pad knappar (i korsform) */
-#left {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-#right {
-    grid-column: 3;
-    grid-row: 2;
-    position: relative; /* Gör att A och B kan placeras relativt till denna knapp */
-}
-
-#up {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-#down {
-    grid-column: 2;
-    grid-row: 3;
-}
-
-/* Mittpunkten i D-pad */
-.dpad-center {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(68, 68, 68, 0.8);
-    grid-column: 2;
-    grid-row: 2;
-    border-radius: 8px;
-}
-
-/* A- och B-knappar placerade ovanför och under högerpilen */
-#a-container,
-#b-container {
     position: absolute;
-    left: 160px; /* Flyttar knapparna till höger om D-pad */
-}
-
-#a-container {
-    top: -60px; /* Flyttar upp A-knappen ovanför högerpilen */
-}
-
-#b-container {
-    top: 60px; /* Flyttar ner B-knappen under högerpilen */
-}
-
-.red-button {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 0, 0, 0.7); /* Röd med 70% genomskinlighet */
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 50%;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.2s, opacity 0.2s;
-}
-
-.red-button:active {
-    background-color: rgba(139, 0, 0, 0.8); /* Mörkröd vid tryck */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% av bredden */
+    height: 100vh; /* 100% av höjden */
+    background-color: #000000; /* Svart bakgrund */
 }
