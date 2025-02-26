@@ -2,7 +2,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Anpassa storleken till skärmen
+// Se till att canvas har rätt storlek
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -13,21 +13,34 @@ resizeCanvas();
 const MAX_PLAYERS = 30;
 let players = []; // Lista över spelare
 
-// Generera en slumpmässig färg som aldrig blir svart
+// **Felsökning: Logga att spelet startar**
+console.log("Spelet startar...");
+
+// Generera en slumpmässig färg som aldrig blir svart eller för mörk
 function getRandomColor() {
     let hue = Math.random() * 360; // Slumpmässig färgton
     let saturation = 100; // Full färgstyrka
-    let lightness = Math.random() * 50 + 30; // Aldrig för mörk (30-80%)
-    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    let lightness = Math.random() * 50 + 40; // Aldrig för mörk (40-90%)
+    let color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    
+    // **Felsökning: Logga vilken färg som skapas**
+    console.log("Genererad färg:", color);
+    
+    return color;
 }
 
 // Skapa en ny spelpjäs (streckgubbe)
 function createPlayer() {
-    return {
+    let player = {
         x: Math.random() * (canvas.width - 50) + 25, // Håller spelaren inom skärmen
         y: Math.random() * (canvas.height - 50) + 25,
         color: getRandomColor(), // Slumpmässig färg som alltid syns
     };
+
+    // **Felsökning: Logga spelaren som skapades**
+    console.log("Ny spelare skapad:", player);
+
+    return player;
 }
 
 // Lägg till en ny spelare om maxgränsen inte är nådd
@@ -35,6 +48,7 @@ function addPlayer() {
     if (players.length < MAX_PLAYERS) {
         let newPlayer = createPlayer();
         players.push(newPlayer);
+        drawPlayers(); // Rita direkt så att vi ser att det funkar
     }
 }
 
@@ -50,6 +64,9 @@ function drawPlayer(player) {
     let legLength = 20;
     let x = player.x;
     let y = player.y;
+
+    // **Felsökning: Logga att vi ritar spelaren**
+    console.log(`Ritar spelare vid (${x}, ${y})`);
 
     // Huvud
     ctx.beginPath();
@@ -79,10 +96,14 @@ function drawPlayer(player) {
 
 // Rita alla spelpjäser på canvasen
 function drawPlayers() {
+    // **Felsökning: Logga att vi ritar bakgrunden**
+    console.log("Ritar bakgrund och spelare...");
+
     ctx.fillStyle = "black"; // Måla bakgrunden först
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    players.forEach(drawPlayer); // Rita varje spelare
+    // Rita alla spelare
+    players.forEach(drawPlayer);
 }
 
 // **Game Loop som ritar spelet kontinuerligt**
