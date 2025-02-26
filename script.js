@@ -32,8 +32,16 @@ function addPlayer() {
     if (players.length < MAX_PLAYERS) {
         let newPlayer = createPlayer();
         players.push(newPlayer);
-        drawPlayers(); // Rita om alla spelare direkt när en ny ansluter
     }
+}
+
+// Rita alla spelpjäser på canvasen
+function drawPlayers() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height); // Svart bakgrund
+
+    players.forEach(drawPlayer); // Rita varje spelare
 }
 
 // Rita streckgubbe med längre armar
@@ -75,14 +83,12 @@ function drawPlayer(player) {
     ctx.stroke();
 }
 
-// Rita alla spelpjäser på canvasen
-function drawPlayers() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height); // Svart bakgrund
-
-    players.forEach(drawPlayer); // Rita varje spelare
+// **VIKTIG FIX**: Se till att spelet ritar om sig kontinuerligt
+function gameLoop() {
+    drawPlayers();
+    requestAnimationFrame(gameLoop);
 }
 
 // Lägg till en spelare när någon går in i spelet
 addPlayer();
+gameLoop();
