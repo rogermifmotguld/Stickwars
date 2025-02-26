@@ -2,14 +2,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// **TEST 1: Finns canvasen?**
-if (!canvas) {
-    console.error("FEL: Canvasen kunde inte hittas!");
-} else {
-    console.log("✅ Canvas hittad.");
-}
-
-// **TEST 2: Anpassa canvasens storlek**
+// Anpassa storleken till skärmen
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -17,27 +10,31 @@ function resizeCanvas() {
 }
 resizeCanvas();
 
-// **TEST 3: Ritar vi något?**
-ctx.fillStyle = "red";
-ctx.fillRect(50, 50, 100, 100);
-console.log("✅ Röd fyrkant ritad. Ser du den?");
-
 // Konstanter
 const MAX_PLAYERS = 30;
 let players = []; // Lista över spelare
 
-// **TEST 4: Skapa en spelare**
+// Generera en slumpmässig färg som aldrig blir svart eller för mörk
+function getRandomColor() {
+    let hue = Math.random() * 360; // Slumpmässig färgton
+    let saturation = 100; // Full färgstyrka
+    let lightness = Math.random() * 50 + 40; // Aldrig för mörk (40-90%)
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
+// Skapa en ny spelpjäs (streckgubbe) med slumpmässig position och färg
 function createPlayer() {
     let player = {
-        x: canvas.width / 2, // Placera i mitten för test
-        y: canvas.height / 2,
-        color: "white" // Enkel färg för test
+        x: Math.random() * (canvas.width - 50) + 25, // Slumpad X-position
+        y: Math.random() * (canvas.height - 50) + 25, // Slumpad Y-position
+        color: getRandomColor(), // Slumpmässig färg
     };
+
     console.log("✅ Ny spelare skapad:", player);
     return player;
 }
 
-// Lägg till en spelare
+// Lägg till en ny spelare om maxgränsen inte är nådd
 function addPlayer() {
     if (players.length < MAX_PLAYERS) {
         let newPlayer = createPlayer();
@@ -46,7 +43,7 @@ function addPlayer() {
     }
 }
 
-// **TEST 5: Enkel ritfunktion för en spelare**
+// Rita streckgubbe med längre armar
 function drawPlayer(player) {
     ctx.strokeStyle = player.color;
     ctx.lineWidth = 3;
@@ -71,7 +68,7 @@ function drawPlayer(player) {
     ctx.lineTo(x, y + headSize + bodyLength);
     ctx.stroke();
 
-    // Armar
+    // Armar (extra långa för att hålla vapen)
     ctx.beginPath();
     ctx.moveTo(x - armLength, y + headSize + 10);
     ctx.lineTo(x + armLength, y + headSize + 10);
@@ -86,22 +83,22 @@ function drawPlayer(player) {
     ctx.stroke();
 }
 
-// **TEST 6: Enkel bakgrund och spelarrendering**
+// Rita alla spelpjäser på canvasen
 function drawPlayers() {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    console.log("✅ Bakgrund ritad");
 
     players.forEach(drawPlayer);
 }
 
-// **TEST 7: Starta spelet och logga varje frame**
+// **Game Loop som ritar spelet kontinuerligt**
 function gameLoop() {
-    console.log("✅ Frame ritas...");
     drawPlayers();
     requestAnimationFrame(gameLoop);
 }
 
-// **Starta spelet**
-addPlayer();
+// **Starta spelet med flera spelare**
+for (let i = 0; i < 5; i++) { // Testa med 5 spelare
+    addPlayer();
+}
 gameLoop();
