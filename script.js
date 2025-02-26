@@ -72,4 +72,13 @@ function drawPlayer(player) {
 
 // Rita alla spelpjäser på canvasen
 function drawPlayers() {
-    ctx.clearRect(0
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height); // Svart bakgrund
+
+    players.forEach(drawPlayer); // Rita varje spelare
+}
+
+// Lägg till en spelare när någon går in i spelet
+addPlayer();
+drawPlayers();
