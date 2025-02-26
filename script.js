@@ -1,19 +1,75 @@
-/* Ta bort marginaler och hindra scrollning */
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    touch-action: none; /* Förhindrar oönskade gester */
-    background-color: black;
+// Hämta canvas och sätt storlek
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Anpassa storleken till skärmen
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Konstanter
+const MAX_PLAYERS = 30;
+let players = []; // Lista över spelare
+
+// Generera en slumpmässig färg
+function getRandomColor() {
+    return `hsl(${Math.random() * 360}, 100%, 50%)`; // Slumpmässig färg med hög ljusstyrka
 }
 
-/* Canvas fyller hela skärmen */
-#gameCanvas {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw; /* 100% av bredden */
-    height: 100vh; /* 100% av höjden */
-    background-color: black; /* Svart bakgrund */
+// Skapa en ny spelpjäs (streckgubbe)
+function createPlayer() {
+    return {
+        x: Math.random() * canvas.width, // Slumpad startposition
+        y: Math.random() * canvas.height,
+        color: getRandomColor(), // Slumpmässig färg
+    };
 }
+
+// Lägg till en ny spelare om maxgränsen inte är nådd
+function addPlayer() {
+    if (players.length < MAX_PLAYERS) {
+        players.push(createPlayer());
+    }
+}
+
+// Rita streckgubbe med längre armar
+function drawPlayer(player) {
+    ctx.strokeStyle = player.color;
+    ctx.lineWidth = 3;
+
+    // Kroppsdelar
+    let headSize = 15;
+    let bodyLength = 30;
+    let armLength = 40; // Förlängda armar för att kunna hålla vapen
+    let legLength = 20;
+    let x = player.x;
+    let y = player.y;
+
+    // Huvud
+    ctx.beginPath();
+    ctx.arc(x, y, headSize, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Kropp
+    ctx.beginPath();
+    ctx.moveTo(x, y + headSize);
+    ctx.lineTo(x, y + headSize + bodyLength);
+    ctx.stroke();
+
+    // Armar (längre nu)
+    ctx.beginPath();
+    ctx.moveTo(x - armLength, y + headSize + 10); // Vänster arm
+    ctx.lineTo(x + armLength, y + headSize + 10); // Höger arm
+    ctx.stroke();
+
+    // Ben
+    ctx.beginPath();
+    ctx.moveTo(x, y + headSize + bodyLength);
+    ctx.lineTo(x - legLength, y + headSize + bodyLength + 20);
+    ctx.moveTo(x, y + headSize + bodyLength);
+    ctx.lineTo(x + legLength, y + headSize + bodyLength + 20);
+    ctx.stroke();
+}
+
+// Rita alla spelpjäser på canvasen
+function drawPlayers() {
+    ctx.clearRect(0
