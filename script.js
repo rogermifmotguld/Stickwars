@@ -10,9 +10,12 @@ canvas.height = window.innerHeight;
 const MAX_PLAYERS = 30;
 let players = []; // Lista över spelare
 
-// Generera en slumpmässig färg
+// Generera en slumpmässig färg som aldrig blir svart
 function getRandomColor() {
-    return `hsl(${Math.random() * 360}, 100%, 50%)`; // Slumpmässig färg med hög ljusstyrka
+    let hue = Math.random() * 360; // Slumpmässig färgton
+    let saturation = 100; // Full färgstyrka
+    let lightness = Math.random() * 50 + 30; // Aldrig för mörk (30-80%)
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
 // Skapa en ny spelpjäs (streckgubbe)
@@ -20,14 +23,16 @@ function createPlayer() {
     return {
         x: Math.random() * canvas.width, // Slumpad startposition
         y: Math.random() * canvas.height,
-        color: getRandomColor(), // Slumpmässig färg
+        color: getRandomColor(), // Slumpmässig färg som alltid syns
     };
 }
 
 // Lägg till en ny spelare om maxgränsen inte är nådd
 function addPlayer() {
     if (players.length < MAX_PLAYERS) {
-        players.push(createPlayer());
+        let newPlayer = createPlayer();
+        players.push(newPlayer);
+        drawPlayers(); // Rita om alla spelare direkt när en ny ansluter
     }
 }
 
@@ -81,4 +86,3 @@ function drawPlayers() {
 
 // Lägg till en spelare när någon går in i spelet
 addPlayer();
-drawPlayers();
