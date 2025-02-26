@@ -3,8 +3,11 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Anpassa storleken till skärmen
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
 
 // Konstanter
 const MAX_PLAYERS = 30;
@@ -21,8 +24,8 @@ function getRandomColor() {
 // Skapa en ny spelpjäs (streckgubbe)
 function createPlayer() {
     return {
-        x: Math.random() * canvas.width, // Slumpad startposition
-        y: Math.random() * canvas.height,
+        x: Math.random() * (canvas.width - 50) + 25, // Håller spelaren inom skärmen
+        y: Math.random() * (canvas.height - 50) + 25,
         color: getRandomColor(), // Slumpmässig färg som alltid syns
     };
 }
@@ -35,15 +38,6 @@ function addPlayer() {
     }
 }
 
-// Rita alla spelpjäser på canvasen
-function drawPlayers() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa canvasen
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height); // Svart bakgrund
-
-    players.forEach(drawPlayer); // Rita varje spelare
-}
-
 // Rita streckgubbe med längre armar
 function drawPlayer(player) {
     ctx.strokeStyle = player.color;
@@ -52,7 +46,7 @@ function drawPlayer(player) {
     // Kroppsdelar
     let headSize = 15;
     let bodyLength = 30;
-    let armLength = 40; // Förlängda armar för att kunna hålla vapen
+    let armLength = 50; // Ännu längre armar för vapen
     let legLength = 20;
     let x = player.x;
     let y = player.y;
@@ -68,7 +62,7 @@ function drawPlayer(player) {
     ctx.lineTo(x, y + headSize + bodyLength);
     ctx.stroke();
 
-    // Armar (längre nu)
+    // Armar (extra långa för att hålla vapen)
     ctx.beginPath();
     ctx.moveTo(x - armLength, y + headSize + 10); // Vänster arm
     ctx.lineTo(x + armLength, y + headSize + 10); // Höger arm
@@ -83,12 +77,20 @@ function drawPlayer(player) {
     ctx.stroke();
 }
 
-// **VIKTIG FIX**: Se till att spelet ritar om sig kontinuerligt
+// Rita alla spelpjäser på canvasen
+function drawPlayers() {
+    ctx.fillStyle = "black"; // Måla bakgrunden först
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    players.forEach(drawPlayer); // Rita varje spelare
+}
+
+// **Game Loop som ritar spelet kontinuerligt**
 function gameLoop() {
     drawPlayers();
     requestAnimationFrame(gameLoop);
 }
 
-// Lägg till en spelare när någon går in i spelet
+// **VIKTIG FIX**: Se till att minst en spelare skapas
 addPlayer();
 gameLoop();
