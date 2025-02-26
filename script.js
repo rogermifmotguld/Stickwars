@@ -15,16 +15,15 @@ const OBSTACLE_LIFETIME = 60000; // 60 sekunder
 const PLAYER_SPEED = 5;
 const GRAVITY = 0.5;
 let obstacles = []; // Lista över hinder
-let players = []; // Lista över spelare
 
-// Spelarens data (lokal spelare)
+// Spelarens data (endast en spelare)
 let player = {
     x: canvas.width / 2,
-    y: canvas.height / 2,
+    y: canvas.height - 100,
     width: 30,
     height: 50,
     targetX: canvas.width / 2,
-    targetY: canvas.height / 2,
+    targetY: canvas.height - 100,
     velocityY: 0,
     color: "red", 
     onGround: false
@@ -47,9 +46,11 @@ function updateObstacles() {
     // Behåll bara hinder som är yngre än 60 sekunder
     obstacles = obstacles.filter(obstacle => now - obstacle.createdAt < OBSTACLE_LIFETIME);
 
-    // Fyll på med nya hinder om det finns plats
+    // Skapa nya hinder om det finns plats
     while (obstacles.length < MAX_OBSTACLES) {
-        obstacles.push(createRandomObstacle());
+        let newObstacle = createRandomObstacle();
+        obstacles.push(newObstacle);
+        console.log("✅ Nytt hinder skapat:", newObstacle);
     }
 }
 
@@ -146,5 +147,6 @@ canvas.addEventListener("touchstart", (event) => {
     }
 });
 
-// Starta spelet
+// **Starta spelet och generera hinder EN GÅNG**
+updateObstacles();
 gameLoop();
