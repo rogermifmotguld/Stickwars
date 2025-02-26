@@ -2,36 +2,12 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>NES Touch-spel</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>NES Touch-spel</h1>
-    <p id="score">Poäng: 0</p>
-
-    <!-- Spelplan (Canvas) -->
     <canvas id="gameCanvas"></canvas>
-
-    <div class="controller">
-        <!-- Styrplatta (D-pad i korsform) -->
-        <div class="dpad">
-            <button class="dpad-button" id="left">◀</button>
-            <button class="dpad-button" id="right">▶</button>
-            <button class="dpad-button" id="up">▲</button>
-            <button class="dpad-button" id="down">▼</button>
-            <div class="dpad-center"></div>
-        </div>
-
-        <!-- A och B ovanför och under högerpilen -->
-        <div id="a-container">
-            <button class="red-button" id="buttonA">A</button>
-        </div>
-        <div id="b-container">
-            <button class="red-button" id="buttonB">B</button>
-        </div>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
