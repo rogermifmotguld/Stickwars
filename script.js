@@ -16,7 +16,7 @@ const PLAYER_SPEED = 5;
 const GRAVITY = 0.5;
 let obstacles = []; // Lista över hinder
 
-// Spelarens data (endast en spelare)
+// **Spelaren (BARA EN SKAPAS)**
 let player = {
     x: canvas.width / 2,
     y: canvas.height - 100,
@@ -29,7 +29,7 @@ let player = {
     onGround: false
 };
 
-// Generera ett slumpmässigt hinder (en form med ett vitt streck inuti)
+// **Skapa ett slumpmässigt hinder (geometrisk form med vitt streck)**
 function createRandomObstacle() {
     return {
         x: Math.random() * (canvas.width - 100), // Slumpmässig position
@@ -40,21 +40,20 @@ function createRandomObstacle() {
     };
 }
 
-// Uppdatera hindren: Ta bort gamla och skapa nya
+// **Uppdatera hindren: Ta bort gamla och skapa nya**
 function updateObstacles() {
     const now = Date.now();
+    
     // Behåll bara hinder som är yngre än 60 sekunder
     obstacles = obstacles.filter(obstacle => now - obstacle.createdAt < OBSTACLE_LIFETIME);
 
     // Skapa nya hinder om det finns plats
     while (obstacles.length < MAX_OBSTACLES) {
-        let newObstacle = createRandomObstacle();
-        obstacles.push(newObstacle);
-        console.log("✅ Nytt hinder skapat:", newObstacle);
+        obstacles.push(createRandomObstacle());
     }
 }
 
-// Rita hindren (vita geometriska former med ett vitt streck inuti)
+// **Rita hindren (vita geometriska former med ett vitt streck inuti)**
 function drawObstacles() {
     ctx.strokeStyle = "white";
     ctx.lineWidth = 3;
@@ -71,7 +70,7 @@ function drawObstacles() {
     });
 }
 
-// Kolla kollision med hinder (för klättring)
+// **Kolla kollision med hinder (för klättring)**
 function checkCollision(player, obstacle) {
     return (
         player.x + player.width > obstacle.x &&
@@ -81,7 +80,7 @@ function checkCollision(player, obstacle) {
     );
 }
 
-// Uppdatera spelaren (rörelse och gravitation)
+// **Uppdatera spelaren (rörelse och gravitation)**
 function updatePlayer() {
     let dx = player.targetX - player.x;
     let dy = player.targetY - player.y;
@@ -116,13 +115,13 @@ function updatePlayer() {
     }
 }
 
-// Rita spelaren
+// **Rita spelaren**
 function drawPlayer() {
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
-// Uppdatera och rita spelet
+// **Uppdatera och rita spelet**
 function drawGame() {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -130,7 +129,7 @@ function drawGame() {
     drawPlayer();
 }
 
-// Spelets huvudloop
+// **Spelets huvudloop**
 function gameLoop() {
     updateObstacles(); // Hantera hinder (ta bort gamla, skapa nya)
     updatePlayer(); // Hantera spelarens rörelser
@@ -138,7 +137,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// Lyssna efter touch för att flytta spelaren
+// **Lyssna efter touch för att flytta spelaren**
 canvas.addEventListener("touchstart", (event) => {
     let touch = event.touches[0];
     player.targetX = touch.clientX;
