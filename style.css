@@ -1,13 +1,13 @@
-/* Grundläggande stil */
+/* Ta bort marginaler och hindra scrollning */
 body, html {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Hindrar scrollning */
-    touch-action: none; /* Förhindrar oväntade touch-gester */
-    background-color: black; /* Svart bakgrund */
+    overflow: hidden;
+    touch-action: none; /* Förhindrar oönskade gester */
+    background-color: black;
 }
 
-/* Canvas täcker hela skärmen */
+/* Canvas fyller hela skärmen */
 #gameCanvas {
     display: block;
     position: absolute;
@@ -15,5 +15,5 @@ body, html {
     left: 0;
     width: 100vw; /* 100% av bredden */
     height: 100vh; /* 100% av höjden */
-    background-color: #000000; /* Svart bakgrund */
+    background-color: black; /* Svart bakgrund */
 }
