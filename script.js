@@ -21,7 +21,7 @@ function createBoard() {
 }
 
 function placeDiamond() {
-  // Placera diamanten på en slumpmässig position (ej 0)
+  // Placera diamanten på slumpad ruta (inte ruta 0)
   do {
     diamondPosition = Math.floor(Math.random() * 25);
   } while (diamondPosition === 0);
@@ -39,7 +39,6 @@ function movePlayer() {
   if (playerPosition > 24) playerPosition = 24;
 
   document.getElementById("player-position").innerText = playerPosition;
-
   highlightPlayer();
 
   if (playerPosition === diamondPosition) {
@@ -52,5 +51,7 @@ function highlightPlayer() {
     document.getElementById("cell-" + i).style.backgroundColor = "white";
   }
   const current = document.getElementById("cell-" + playerPosition);
-  current.style.backgroundColor = "#ffff8d";
+  if (current) {
+    current.style.backgroundColor = "#ffff8d"; // gul för spelare
+  }
 }
