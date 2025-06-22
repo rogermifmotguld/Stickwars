@@ -1,171 +1,26 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2D Platformer Game</title>
-  <style>
-    canvas {
-      background: #eef;
-      display: block;
-      margin: 0 auto;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Den Försvunna Diamanten</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="400"></canvas>
-  <script src="main.js"></script>
+  <h1>Den Försvunna Diamanten</h1>
+
+  <div id="game-board"></div>
+
+  <div id="controls">
+    <button onclick="rollDice()">🎲 Slå tärning</button>
+    <p id="dice-result">Resultat: </p>
+    <button onclick="movePlayer()">➡️ Flytta</button>
+  </div>
+
+  <div id="player-info">
+    <p>Spelare är på ruta <span id="player-position">0</span> av 24</p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
-/* README.md */
-# 2D Platformer Game
-
-Ett enkelt 2D-plattformsspel byggt med JavaScript och HTML5 Canvas.
-
-## Funktioner
-- Spelare som kan springa och hoppa
-- Plattformar att hoppa mellan
-- Tyngdkraft och enkel fysik
-- Vinstmekanik: nå en specifik målplattform
-
-## Spela spelet
-1. Ladda ner projektet eller klona det:
-```bash
-git clone https://github.com/ditt-anvandarid/platformer-game.git
-```
-2. Öppna `index.html` i din webbläsare
-
-## Roadmap
-- Lägga till poängsystem
-- Fler nivåer
-- Ljud
-- Mobilsupport
-
-## Licens
-MIT
-
-/* .gitignore */
-node_modules/
-dist/
-.DS_Store
-
-/* LICENSE (MIT License) */
-MIT License
-
-Copyright (c) 2025
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-
-/* main.js */
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-
-// Spelvariabler
-const gravity = 0.5;
-let keys = {};
-
-// Spelare
-let player = {
-  x: 50,
-  y: 300,
-  width: 30,
-  height: 30,
-  dx: 0,
-  dy: 0,
-  jumpPower: -10,
-  grounded: false
-};
-
-// Plattformar
-const platforms = [
-  { x: 0, y: 370, width: 800, height: 30 },
-  { x: 200, y: 300, width: 120, height: 10 },
-  { x: 400, y: 250, width: 120, height: 10 },
-  { x: 600, y: 200, width: 120, height: 10 }
-];
-
-// Målplattform
-const goal = { x: 600, y: 170, width: 120, height: 10 };
-
-function drawPlayer() {
-  ctx.fillStyle = "blue";
-  ctx.fillRect(player.x, player.y, player.width, player.height);
-}
-
-function drawPlatforms() {
-  ctx.fillStyle = "black";
-  platforms.forEach(p => {
-    ctx.fillRect(p.x, p.y, p.width, p.height);
-  });
-  ctx.fillStyle = "green";
-  ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
-}
-
-function updatePlayer() {
-  // Rörelse
-  if (keys["ArrowLeft"]) player.dx = -5;
-  else if (keys["ArrowRight"]) player.dx = 5;
-  else player.dx = 0;
-
-  // Hoppa
-  if (keys["Space"] && player.grounded) {
-    player.dy = player.jumpPower;
-    player.grounded = false;
-  }
-
-  // Tyngdkraft
-  player.dy += gravity;
-  player.x += player.dx;
-  player.y += player.dy;
-
-  // Kollision
-  player.grounded = false;
-  platforms.forEach(p => {
-    if (
-      player.x < p.x + p.width &&
-      player.x + player.width > p.x &&
-      player.y < p.y + p.height &&
-      player.y + player.height > p.y
-    ) {
-      // Landa på plattform
-      if (player.dy >= 0 && player.y + player.height - player.dy <= p.y) {
-        player.y = p.y - player.height;
-        player.dy = 0;
-        player.grounded = true;
-      }
-    }
-  });
-
-  // Vinstkoll
-  if (
-    player.x < goal.x + goal.width &&
-    player.x + player.width > goal.x &&
-    player.y < goal.y + goal.height &&
-    player.y + player.height > goal.y
-  ) {
-    alert("Du vann!");
-    window.location.reload();
-  }
-}
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawPlatforms();
-  drawPlayer();
-}
-
-function gameLoop() {
-  updatePlayer();
-  draw();
-  requestAnimationFrame(gameLoop);
-}
-
-document.addEventListener("keydown", e => (keys[e.code] = true));
-document.addEventListener("keyup", e => (keys[e.code] = false));
-
-// Starta spelet
-gameLoop();
