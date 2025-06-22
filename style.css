@@ -1,6 +1,6 @@
 body {
   font-family: 'Comic Sans MS', cursive;
-  background-color: #f0f8ff;
+  background-color: #e3f2fd;
   text-align: center;
   margin: 0;
   padding: 20px;
@@ -16,7 +16,7 @@ h1 {
   grid-gap: 5px;
   justify-content: center;
   margin: 20px auto;
-  max-width: 320px; /* Begränsa till rätt bredd */
+  max-width: 320px;
 }
 
 .cell {
@@ -28,6 +28,19 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+
+.cell.allowed {
+  background-color: #b2ebf2;
+}
+
+.cell.player {
+  background-color: #ffff8d !important;
+}
+
+.cell.diamond {
+  background-color: #e1bee7;
 }
 
 #controls button {
@@ -45,7 +58,6 @@ h1 {
   margin-top: 15px;
 }
 
-/* Mobilanpassning */
 @media (max-width: 500px) {
   #game-board {
     grid-template-columns: repeat(5, 40px);
