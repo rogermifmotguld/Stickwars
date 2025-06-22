@@ -16,6 +16,7 @@ h1 {
   grid-gap: 5px;
   justify-content: center;
   margin: 20px auto;
+  max-width: 320px; /* Begränsa till rätt bredd */
 }
 
 .cell {
@@ -48,6 +49,7 @@ h1 {
 @media (max-width: 500px) {
   #game-board {
     grid-template-columns: repeat(5, 40px);
+    max-width: 220px;
   }
 
   .cell {
