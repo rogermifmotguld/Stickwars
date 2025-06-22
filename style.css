@@ -1,19 +1,63 @@
-/* Ta bort marginaler och hindra scrollning */
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    touch-action: none; /* Förhindrar oönskade gester */
-    background-color: black;
+body {
+  font-family: 'Comic Sans MS', cursive;
+  background-color: #f0f8ff;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
 }
 
-/* Canvas fyller hela skärmen */
-#gameCanvas {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw; /* 100% av bredden */
-    height: 100vh; /* 100% av höjden */
-    background-color: black; /* Svart bakgrund */
+h1 {
+  color: #006064;
+}
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  grid-gap: 5px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border: 2px solid #00838f;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#controls button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #4dd0e1;
+  border: none;
+  border-radius: 10px;
+  color: white;
+}
+
+#player-info {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+/* Mobilanpassning */
+@media (max-width: 500px) {
+  #game-board {
+    grid-template-columns: repeat(5, 40px);
+  }
+
+  .cell {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  #controls button {
+    font-size: 16px;
+    padding: 8px 15px;
+  }
 }
